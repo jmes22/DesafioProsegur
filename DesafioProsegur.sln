@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioProsegur", "DesafioProsegur\DesafioProsegur.csproj", "{7014A5AD-BFC5-445A-A969-95D13B881B26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{755D842B-2D3F-47DF-AE7E-219E196B2E23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{1AEE2233-A66F-4ECB-9F35-8C243ABD08C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7014A5AD-BFC5-445A-A969-95D13B881B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7014A5AD-BFC5-445A-A969-95D13B881B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7014A5AD-BFC5-445A-A969-95D13B881B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7014A5AD-BFC5-445A-A969-95D13B881B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{755D842B-2D3F-47DF-AE7E-219E196B2E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{755D842B-2D3F-47DF-AE7E-219E196B2E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{755D842B-2D3F-47DF-AE7E-219E196B2E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{755D842B-2D3F-47DF-AE7E-219E196B2E23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEE2233-A66F-4ECB-9F35-8C243ABD08C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEE2233-A66F-4ECB-9F35-8C243ABD08C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEE2233-A66F-4ECB-9F35-8C243ABD08C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEE2233-A66F-4ECB-9F35-8C243ABD08C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CE35C0A-0063-4589-8E6F-0C003D2B2F6B}
+	EndGlobalSection
+EndGlobal
