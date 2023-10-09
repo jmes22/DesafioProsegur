@@ -1,4 +1,5 @@
-﻿using DesafioProsegur.Models;
+﻿using DAL;
+using DesafioProsegur.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,14 +8,22 @@ namespace DesafioProsegur.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfwork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IUnitOfWork unitOfwork
+            )
         {
             _logger = logger;
+            _unitOfwork = unitOfwork;
         }
 
         public IActionResult Index()
         {
+            var a = 0;
+            var b = _unitOfwork.DetalleFacturaRepository.GetCantidad(1, 2);
+
             return View();
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class Ususario
+    public class Ususario
     {
         private int id;
         private ICollection<Rol> roles;

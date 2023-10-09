@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class Item
+    public class Item
     {
         private int id;
         private string nombre;

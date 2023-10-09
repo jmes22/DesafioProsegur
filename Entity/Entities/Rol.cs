@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class Rol
+    public class Rol
     {
         private int id;
         private string nombre;

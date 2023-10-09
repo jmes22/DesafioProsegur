@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class Factura
+    public class Factura
     {
         private int id;
         private int precio;

@@ -1,6 +1,6 @@
 ﻿namespace Entity.Entities
 {
-    internal class Pedido
+    public class Pedido
     {
         private int id;
         private DateTime fechaInicio;

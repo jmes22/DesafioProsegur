@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entity.Entities
+﻿namespace Entity.Entities
 {
-    internal class Estado
+    public class Estado
     {
-        private int id;
-        private string nombre;
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        //private int id;
+        //private string nombre;
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        //public int Id
+        //{
+        //    get { return id; }
+        //    set { id = value; }
+        //}
 
-        public string Nombre
-        {
-            get { return nombre; }
-            set { nombre = value; }
-        }
+        //public string Nombre
+        //{
+        //    get { return nombre; }
+        //    set { nombre = value; }
+        //}
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class OrdenTrabajo
+    public class OrdenTrabajo
     {
         private int id;
         private int idPedido;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity.Entities
 {
-    internal class Impuesto
+    public class Impuesto
     {
         private int id;
         private string nombre;
