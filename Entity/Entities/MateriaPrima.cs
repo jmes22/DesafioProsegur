@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,6 @@ namespace Entity.Entities
         private int id;
         private string nombre;
         private double precio;
-        private Provincia provincia;
 
         public int Id
         {
@@ -31,10 +32,7 @@ namespace Entity.Entities
             set { precio = value; }
         }
 
-        public Provincia Provincia
-        {
-            get { return provincia; }
-            set { provincia = value; }
-        }
+        public virtual ICollection<MateriaPrimaXProvincia> MateriaPrimaXProvincia { get; set; } = new List<MateriaPrimaXProvincia>();
+        public virtual ICollection<MateriaPrimaXItem> MateriaPrimaXItem { get; set; } = new List<MateriaPrimaXItem>();
     }
 }

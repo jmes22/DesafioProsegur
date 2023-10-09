@@ -13,7 +13,7 @@ namespace Entity.Entities
         private string nombre;
         private int tiempoEjecucion;
         private double precio;
-        private ICollection<MateriaPrima> materiasPrima;
+        private ICollection<MateriaPrimaXItem> materiasPrimaXItem;
 
         public int Id
         {
@@ -39,10 +39,10 @@ namespace Entity.Entities
             set { precio = value; }
         }
 
-        public ICollection<MateriaPrima> MateriasPrima
+        public virtual ICollection<MateriaPrimaXItem> MateriasPrimaXItem
         {
-            get { return materiasPrima; }
-            set { materiasPrima = value; }
+            get { return materiasPrimaXItem; }
+            set { materiasPrimaXItem = value; }
         }
     }
 }

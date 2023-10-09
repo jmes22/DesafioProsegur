@@ -24,10 +24,12 @@ namespace Entity.Entities
             set { nombre = value; }
         }
 
-        public Impuesto Impuesto
+        public virtual Impuesto Impuesto
         {
             get { return impuesto; }
             set { impuesto = value; }
         }
+
+        public virtual ICollection<MateriaPrimaXProvincia> MateriaPrimaXProvincia { get; set; } = new List<MateriaPrimaXProvincia>();
     }
 }

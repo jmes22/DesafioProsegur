@@ -11,6 +11,8 @@ namespace Entity.Entities
     public class DetalleFactura
     {
         private int id;
+        private int idFactura;
+        private Factura factura;
         private ICollection<Pedido> pedidos;
 
         public int Id
@@ -19,7 +21,19 @@ namespace Entity.Entities
             set { id = value; }
         }
 
-        public ICollection<Pedido> Pedidos
+        public int IdFactura
+        {
+            get { return idFactura; }
+            set { idFactura = value; }
+        }
+
+        public virtual Factura Factura
+        {
+            get { return factura; }
+            set { factura = value; }
+        }
+
+        public virtual ICollection<Pedido> Pedidos
         {
             get { return pedidos; }
             set { pedidos = value; }

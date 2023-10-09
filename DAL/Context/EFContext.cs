@@ -44,57 +44,104 @@ public partial class EFContext : DbContext
         modelBuilder.Entity<DetalleFactura>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("DetalleFactura");
         });
 
-        modelBuilder.Entity<Estado>().ToTable("Estado");
         modelBuilder.Entity<Estado>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Estado");
         });
 
         modelBuilder.Entity<Factura>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Factura");
         });
 
         modelBuilder.Entity<Impuesto>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Impuesto");
         });
 
         modelBuilder.Entity<Item>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Item");
         });
 
         modelBuilder.Entity<MateriaPrima>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("MateriaPrima");
+        });
+
+        modelBuilder.Entity<MateriaPrimaXItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("MateriaPrimaXItem");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.MateriasPrimaXItem)
+              .HasForeignKey(d => d.IdItem);
+
+            entity.HasOne(d => d.MateriaPrima).WithMany(p => p.MateriaPrimaXItem)
+               .HasForeignKey(d => d.IdMateriaPrima);
+        });
+
+        modelBuilder.Entity<MateriaPrimaXProvincia>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("MateriaPrimaXProvincia");
+
+            entity.HasOne(d => d.Provincia).WithMany(p => p.MateriaPrimaXProvincia)
+             .HasForeignKey(d => d.IdProvincia);
+
+            entity.HasOne(d => d.MateriaPrima).WithMany(p => p.MateriaPrimaXProvincia)
+               .HasForeignKey(d => d.IdMateriaPrima);
         });
 
         modelBuilder.Entity<OrdenTrabajo>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("OrdenTrabajo");
         });
 
         modelBuilder.Entity<Pedido>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Pedido");
         });
 
         modelBuilder.Entity<Provincia>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Provincia");
         });
 
         modelBuilder.Entity<Rol>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Rol");
         });
 
         modelBuilder.Entity<Ususario>(entity =>
         {
             entity.HasKey(e => e.Id);
+
+            entity.ToTable("Ususario");
         });
 
         OnModelCreatingPartial(modelBuilder);

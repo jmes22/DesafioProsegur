@@ -17,7 +17,7 @@ namespace Entity.Entities
             set { id = value; }
         }
 
-        public ICollection<Rol> Roles
+        public virtual ICollection<Rol> Roles
         {
             get { return roles; }
             set { roles = value; }

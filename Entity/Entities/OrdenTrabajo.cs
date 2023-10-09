@@ -39,13 +39,13 @@ namespace Entity.Entities
             set { fechaFin = value; }
         }
 
-        public Estado Estado
+        public virtual Estado Estado
         {
             get { return estado; }
             set { estado = value; }
         }
 
-        public Item Item
+        public virtual Item Item
         {
             get { return item; }
             set { item = value; }

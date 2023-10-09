@@ -30,7 +30,7 @@
             get { return precio; }
             set { precio = value; }
         }
-        public ICollection<OrdenTrabajo> Ordenes
+        public virtual ICollection<OrdenTrabajo> Ordenes
         {
             get { return ordenes; }
             set { ordenes = value; }
