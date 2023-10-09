@@ -12,6 +12,7 @@ namespace Entity.Entities
     {
         private int id;
         private string nombre;
+        private int stock;
         private double precio;
 
         public int Id
@@ -24,6 +25,12 @@ namespace Entity.Entities
         {
             get { return nombre; }
             set { nombre = value; }
+        }
+
+        public int Stock
+        {
+            get { return stock; }
+            set { stock = value; }
         }
 
         public double Precio

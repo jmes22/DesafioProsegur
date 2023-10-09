@@ -16,7 +16,6 @@ namespace Entity.Entities
         private Provincia provincia;
         private MateriaPrima materiaPrima;
 
-
         public int Id
         {
             get { return id; }

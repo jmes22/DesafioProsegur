@@ -21,15 +21,21 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
-            var a = 0;
-            var b = _unitOfwork.DetalleFacturaRepository.GetCantidad(1, 2);
+            insertarDataInicial();
 
             return View();
         }
 
-        public IActionResult Privacy()
+        private void insertarDataInicial() 
         {
-            return View();
+            _unitOfwork.EstadoRepository.Iniciar();
+            _unitOfwork.MateriaPrimaRepository.Iniciar();
+            _unitOfwork.ItemRepository.Iniciar();
+            _unitOfwork.ImpuestoRepository.Iniciar();
+            _unitOfwork.ProvinciaRepository.Iniciar();
+            //_unitOfwork.RolRepository.Iniciar();
+            //_unitOfwork.UsuarioRepository.Iniciar();
+            _unitOfwork.CommitTransaction();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

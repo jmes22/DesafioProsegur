@@ -7,7 +7,7 @@ namespace DAL
 {
     public interface IUnitOfWork : IDisposable
     {
-        Task CommitTransactionAsync();
+        void CommitTransaction();
         IDetalleFacturaRepository DetalleFacturaRepository { get; }
         IEstadoRepository EstadoRepository { get; }
         IFacturaRepository FacturaRepository { get; }
@@ -82,17 +82,16 @@ namespace DAL
 
         public IRolRepository RolRepository => _rolRepository;
 
-        public async Task CommitTransactionAsync()
+        public void CommitTransaction()
         {
             try
             {
-                await _context.SaveChangesAsync();
-                await _transaction.CommitAsync();
+                _context.SaveChanges();
+                _transaction.Commit();
             }
             catch (Exception ex)
             {
-                await RollbackTransactionAsync();
-                throw ex;
+                RollbackTransaction();
             }
             finally
             {
@@ -100,11 +99,11 @@ namespace DAL
             }
         }
 
-        private async Task RollbackTransactionAsync()
+        private void RollbackTransaction()
         {
             try
             {
-                await _transaction.RollbackAsync();
+                 _transaction.Rollback();
             }
             catch (Exception ex)
             {

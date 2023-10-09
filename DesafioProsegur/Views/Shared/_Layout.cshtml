@@ -1,15 +1,27 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DesafioProsegur</title>
+    <title>Desafio Prosegur</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DesafioProsegur.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/Datatables/datatables.min.css" type="text/css" />
+
+  
+
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/js/ajax.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/js/grilla.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/js/mensajes.js")" asp-append-version="true"></script>
+    <script src="@Url.Content("~/lib/Datatables/datatables.min.js")"  asp-append-version="true"></script>
+    <script src="@Url.Content("~/lib/bloqUI/bloqUI.js")" asp-append-version="true"></script>
+
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DesafioProsegur</a>
@@ -20,11 +32,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">Hace tu pedido</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MateriaPrima" asp-action="Index">Materia prima</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Pedido" asp-action="Index">Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Factura" asp-action="Index">Facturación</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -32,6 +51,13 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div id="toast_site" class="toast-body">
+                        <!-- Contenido de tu toast aquí -->
+                    </div>
+                </div>
+            </div>
             @RenderBody()
         </main>
     </div>

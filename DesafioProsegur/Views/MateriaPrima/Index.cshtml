@@ -1,0 +1,118 @@
+﻿<div class="accordion" id="accordionMateriaPrima">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMateriaPrima" aria-expanded="true" aria-controls="collapseMateriaPrima">
+                <h2>Materia Prima</h2>
+            </button>
+        </h2>
+        <div id="collapseMateriaPrima" class="accordion-collapse collapse show" data-bs-parent="#accordionMateriaPrima">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tabla_materia_prima" class="table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-2" style="text-align: right;">
+        <button class="btn btn-primary" type="button" onclick="guardarMateriaPrima()">Guardar</button>
+        <a href="/Propiedad" class="btn btn-primary">Volver</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var tablaMateriaPrima = null;
+    const materiaPrima = [];
+
+    $(document).ready(function () {
+        getMateriaPrima();
+        const columnas = obtenerColumnasMateriaPrima();
+
+        tablaMateriaPrima = CrearTabla('tabla_materia_prima', columnas, materiaPrima);
+
+        function obtenerColumnasMateriaPrima() {
+            return [
+                {
+                    'data': 'id',
+                    'searcheable': false,
+                    'visible': false,
+                    'ordereable': false,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'nombre',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'searcheable': false,
+                    'ordereable': false,
+                    data: function (row, type, set) {
+                        var s = '';
+                        const stock = row.stock == null ? 0 : row.stock;
+                        s += `<input id="stock_${row.id}" class='form-control' type='number' value="${stock}"></>`;
+                        return s;
+                    }
+                }
+            ]
+        }
+
+        $('#tabla_materia_prima').on('keyup', 'input[id^="stock_"]', function () {
+            // Obtener el ID único del campo de entrada
+            const campoId = $(this).attr('id');
+
+            // Obtener el valor modificado en el campo de entrada
+            const nuevoValor = $(this).val();
+
+            // Obtener la fila de DataTables
+            const fila = tablaMateriaPrima.row($(this).closest('tr'));
+
+            // Obtener los datos de la fila actual
+            const datosFila = fila.data();
+
+            // Actualizar la propiedad "cantidad" en los datos de la fila
+            if (nuevoValor === "") datosFila.stock = 0;
+            else datosFila.stock = parseInt(nuevoValor);
+        });
+
+    });
+
+    function getMateriaPrima() {
+        Ajax('GET', '/MateriaPrima/GetAll', null, false, true, "Buscando materia prima", getMateriaPrimaResponse);
+    }
+
+    function getMateriaPrimaResponse(obj) {
+        return materiaPrima.push(...obj.innerObject);
+    }
+
+    function guardarMateriaPrima() {
+        const data = { 
+            oViewModel :
+            {
+                MateriasPrima: getDataMateriaPrima() 
+            }
+        };
+
+        Ajax('POST', '/MateriaPrima/Guardar', data, false, true, "Guardando", saveMateriaPrimaSuccess);
+    }
+
+    function saveMateriaPrimaSuccess(response) {
+        MsjAlertaExito('Aviso', 'Guardado correctamente.');
+    }
+
+    function getDataMateriaPrima() {
+        return tablaMateriaPrima.rows().data().toArray();
+    }
+</script>

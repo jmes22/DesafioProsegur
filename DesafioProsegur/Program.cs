@@ -18,10 +18,6 @@ builder.Services.AddDbContext<EFContext>(options =>
     )
 );
 
-//builder.Services.AddDbContext<EFContext>(options =>
-//    options.UseSqlite(builder.Configuration.GetConnectionString("DatabaseConnection")
-//                     ?? throw new Exception("missing connectionstring")));
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();

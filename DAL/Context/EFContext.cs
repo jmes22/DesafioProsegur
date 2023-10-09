@@ -72,14 +72,13 @@ public partial class EFContext : DbContext
         modelBuilder.Entity<Item>(entity =>
         {
             entity.HasKey(e => e.Id);
-
+            entity.Ignore(e => e.Precio);
             entity.ToTable("Item");
         });
 
         modelBuilder.Entity<MateriaPrima>(entity =>
         {
             entity.HasKey(e => e.Id);
-
             entity.ToTable("MateriaPrima");
         });
 
