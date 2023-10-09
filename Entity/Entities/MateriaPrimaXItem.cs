@@ -12,10 +12,11 @@ namespace Entity.Entities
     {
         private int id;
         private int idItem;
+        private int idProvincia;
         private int idMateriaPrima;
         private Item item;
         private MateriaPrima materiaPrima;
-
+        private Provincia provincia;
 
         public int Id
         {
@@ -34,6 +35,11 @@ namespace Entity.Entities
             get { return idMateriaPrima; }
             set { idMateriaPrima = value; }
         }
+        public int IdProvincia
+        {
+            get { return idProvincia; }
+            set { idProvincia = value; }
+        }
 
         public virtual Item Item
         {
@@ -47,5 +53,10 @@ namespace Entity.Entities
             set { materiaPrima = value; }
         }
 
+        public virtual Provincia Provincia
+        {
+            get { return provincia; }
+            set { provincia = value; }
+        }
     }
 }

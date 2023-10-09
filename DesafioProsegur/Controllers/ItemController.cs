@@ -1,5 +1,7 @@
 ﻿using DAL;
 using DesafioProsegur.Models;
+using Entity.Common;
+using Entity.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,35 +9,37 @@ namespace DesafioProsegur.Controllers
 {
     public class ItemController : Controller
     {
-        private readonly ILogger<ItemController> _logger;
         private readonly IUnitOfWork _unitOfwork;
 
         public ItemController(
-            ILogger<ItemController> logger,
             IUnitOfWork unitOfwork
             )
         {
-            _logger = logger;
             _unitOfwork = unitOfwork;
         }
 
         public IActionResult Index()
         {
-            var a = 0;
-            var b = _unitOfwork.DetalleFacturaRepository.GetCantidad(1, 2);
-
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public JsonResult GetAll()
         {
-            return View();
-        }
+            var items = _unitOfwork.ItemRepository.GetAll();
+            List<object> result = new List<object>();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            foreach (var item in items)
+            {
+                result.Add(new { 
+                    id = item.Id,
+                    nombre = item.Nombre,
+                    precio = item.Precio,
+                    cantidad = 0
+                });
+            }
+
+            return Json(JsonReturn.SuccessConRetorno(result));
         }
     }
 }

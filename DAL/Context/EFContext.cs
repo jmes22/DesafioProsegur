@@ -27,6 +27,7 @@ public partial class EFContext : DbContext
     public virtual DbSet<Item> Item { get; set; }
 
     public virtual DbSet<MateriaPrima> MateriaPrima { get; set; }
+    public virtual DbSet<MateriaPrimaXItem> MateriaPrimaXItem { get; set; }
 
     public virtual DbSet<OrdenTrabajo> OrdenTrabajo { get; set; }
 
@@ -93,19 +94,10 @@ public partial class EFContext : DbContext
 
             entity.HasOne(d => d.MateriaPrima).WithMany(p => p.MateriaPrimaXItem)
                .HasForeignKey(d => d.IdMateriaPrima);
-        });
 
-        modelBuilder.Entity<MateriaPrimaXProvincia>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.ToTable("MateriaPrimaXProvincia");
-
-            entity.HasOne(d => d.Provincia).WithMany(p => p.MateriaPrimaXProvincia)
+            entity.HasOne(d => d.Provincia).WithMany(p => p.MateriasPrimaXItem)
              .HasForeignKey(d => d.IdProvincia);
 
-            entity.HasOne(d => d.MateriaPrima).WithMany(p => p.MateriaPrimaXProvincia)
-               .HasForeignKey(d => d.IdMateriaPrima);
         });
 
         modelBuilder.Entity<OrdenTrabajo>(entity =>

@@ -2,9 +2,14 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using DAL.Context;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

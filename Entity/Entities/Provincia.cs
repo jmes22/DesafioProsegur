@@ -11,6 +11,7 @@ namespace Entity.Entities
         private int id;
         private string nombre;
         private Impuesto impuesto;
+        private ICollection<MateriaPrimaXItem> materiasPrimaXItem;
 
         public int Id
         {
@@ -30,6 +31,10 @@ namespace Entity.Entities
             set { impuesto = value; }
         }
 
-        public virtual ICollection<MateriaPrimaXProvincia> MateriaPrimaXProvincia { get; set; } = new List<MateriaPrimaXProvincia>();
+        public virtual ICollection<MateriaPrimaXItem> MateriasPrimaXItem
+        {
+            get { return materiasPrimaXItem; }
+            set { materiasPrimaXItem = value; }
+        }
     }
 }

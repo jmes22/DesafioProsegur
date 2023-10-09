@@ -33,6 +33,7 @@ namespace DesafioProsegur.Controllers
             _unitOfwork.ItemRepository.Iniciar();
             _unitOfwork.ImpuestoRepository.Iniciar();
             _unitOfwork.ProvinciaRepository.Iniciar();
+            _unitOfwork.MateriaPrimaXItemRepository.Iniciar();
             //_unitOfwork.RolRepository.Iniciar();
             //_unitOfwork.UsuarioRepository.Iniciar();
             _unitOfwork.CommitTransaction();

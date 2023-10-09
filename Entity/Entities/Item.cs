@@ -12,7 +12,6 @@ namespace Entity.Entities
         private int id;
         private string nombre;
         private int tiempoEjecucion;
-        private double precio;
         private ICollection<MateriaPrimaXItem> materiasPrimaXItem;
 
         public int Id
@@ -35,14 +34,28 @@ namespace Entity.Entities
 
         public double Precio
         {
-            get { return precio; }
-            set { precio = value; }
+            get { return calcularPrecio(); }
         }
 
         public virtual ICollection<MateriaPrimaXItem> MateriasPrimaXItem
         {
             get { return materiasPrimaXItem; }
             set { materiasPrimaXItem = value; }
+        }
+
+        private double calcularPrecio() {
+            double precioItem = 0;
+
+            if (this.materiasPrimaXItem != null && this.materiasPrimaXItem.Count > 0)
+            {
+                foreach (var mpxi in this.materiasPrimaXItem)
+                {
+                    double precio = mpxi.MateriaPrima.Precio;
+                    precioItem = precio * (1 + mpxi.Provincia.Impuesto.Porcentaje);
+                }
+            }
+
+            return precioItem;
         }
     }
 }

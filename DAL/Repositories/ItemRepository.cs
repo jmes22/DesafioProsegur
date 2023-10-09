@@ -9,6 +9,7 @@ namespace DAL.Repositories;
 public interface IItemRepository
 {
     void Iniciar();
+    ICollection<Item> GetAll();
 }
 public class ItemRepository : IItemRepository
 {
@@ -17,6 +18,18 @@ public class ItemRepository : IItemRepository
     public ItemRepository(EFContext efContext)
     {
         _context = efContext;
+    }
+
+    public ICollection<Item> GetAll()
+    {
+        IQueryable<Item> query = _context.Item
+                                 .Include(i => i.MateriasPrimaXItem)
+                                    .ThenInclude(mp => mp.MateriaPrima)
+                                 .Include(i => i.MateriasPrimaXItem)
+                                    .ThenInclude(mp => mp.Provincia)
+                                    .ThenInclude(imp => imp.Impuesto);
+
+        return query.ToList();
     }
 
     public void Iniciar()
@@ -33,6 +46,8 @@ public class ItemRepository : IItemRepository
 
             _context.Item.Add(oItem1);
             _context.Item.Add(oItem2);
+
+            _context.SaveChanges();
         }
     }
 }

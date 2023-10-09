@@ -39,7 +39,6 @@ namespace Entity.Entities
             set { precio = value; }
         }
 
-        public virtual ICollection<MateriaPrimaXProvincia> MateriaPrimaXProvincia { get; set; } = new List<MateriaPrimaXProvincia>();
         public virtual ICollection<MateriaPrimaXItem> MateriaPrimaXItem { get; set; } = new List<MateriaPrimaXItem>();
     }
 }

@@ -13,6 +13,7 @@ namespace DAL
         IFacturaRepository FacturaRepository { get; }
         IImpuestoRepository ImpuestoRepository { get; }
         IItemRepository ItemRepository { get; }
+        IMateriaPrimaXItemRepository MateriaPrimaXItemRepository { get; }
         IMateriaPrimaRepository MateriaPrimaRepository { get; }
         IOrdenTrabajoRepository OrdenTrabajoRepository { get; }
         IPedidoRepository PedidoRepository { get; }
@@ -32,6 +33,7 @@ namespace DAL
         private readonly FacturaRepository _facturaRepository;
         private readonly ImpuestoRepository _impuestoRepository;
         private readonly ItemRepository _itemRepository;
+        private readonly MateriaPrimaXItemRepository _materiaPrimaXItemRepository;
         private readonly MateriaPrimaRepository _materiaPrimaRepository;
         private readonly OrdenTrabajoRepository _ordenTrabajoRepository;
         private readonly PedidoRepository _pedidoRepository;
@@ -53,6 +55,7 @@ namespace DAL
             _facturaRepository = new FacturaRepository(_context);
             _impuestoRepository = new ImpuestoRepository(_context);
             _itemRepository = new ItemRepository(_context);
+            _materiaPrimaXItemRepository = new MateriaPrimaXItemRepository(_context);
             _materiaPrimaRepository = new MateriaPrimaRepository(_context);
             _ordenTrabajoRepository = new OrdenTrabajoRepository(_context);
             _pedidoRepository = new PedidoRepository(_context);
@@ -71,6 +74,7 @@ namespace DAL
         public IItemRepository ItemRepository => _itemRepository;
 
         public IMateriaPrimaRepository MateriaPrimaRepository => _materiaPrimaRepository;
+        public IMateriaPrimaXItemRepository MateriaPrimaXItemRepository => _materiaPrimaXItemRepository;
 
         public IOrdenTrabajoRepository OrdenTrabajoRepository => _ordenTrabajoRepository;
 
