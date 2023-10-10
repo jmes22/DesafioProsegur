@@ -5,7 +5,7 @@
         private int id;
         private string nombre;
 
-        public int Id
+        public int EstadoId
         {
             get { return id; }
             set { id = value; }

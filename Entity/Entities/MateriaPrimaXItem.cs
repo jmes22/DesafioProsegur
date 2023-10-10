@@ -11,35 +11,32 @@ namespace Entity.Entities
     public class MateriaPrimaXItem
     {
         private int id;
-        private int idItem;
-        private int idProvincia;
-        private int idMateriaPrima;
         private Item item;
         private MateriaPrima materiaPrima;
         private Provincia provincia;
 
-        public int Id
+        public int MateriaPrimaXItemId
         {
             get { return id; }
             set { id = value; }
         }
 
-        public int IdItem
-        {
-            get { return idItem; }
-            set { idItem = value; }
-        }
+        //public int ItemId
+        //{
+        //    get { return idItem; }
+        //    set { idItem = value; }
+        //}
 
-        public int IdMateriaPrima
-        {
-            get { return idMateriaPrima; }
-            set { idMateriaPrima = value; }
-        }
-        public int IdProvincia
-        {
-            get { return idProvincia; }
-            set { idProvincia = value; }
-        }
+        //public int MateriaPrimaId
+        //{
+        //    get { return idMateriaPrima; }
+        //    set { idMateriaPrima = value; }
+        //}
+        //public int ProvinciaId
+        //{
+        //    get { return idProvincia; }
+        //    set { idProvincia = value; }
+        //}
 
         public virtual Item Item
         {

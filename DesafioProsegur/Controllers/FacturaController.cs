@@ -21,9 +21,6 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
-            var a = 0;
-            var b = _unitOfwork.DetalleFacturaRepository.GetCantidad(1, 2);
-
             return View();
         }
 

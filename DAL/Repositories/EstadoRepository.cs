@@ -10,6 +10,7 @@ namespace DAL.Repositories;
 public interface IEstadoRepository
 {
     void Iniciar();
+    Estado? GetById(int id);
 }
 
 public class EstadoRepository : IEstadoRepository
@@ -19,6 +20,11 @@ public class EstadoRepository : IEstadoRepository
     public EstadoRepository(EFContext efContext)
     {
         _context = efContext;
+    }
+
+    public Estado? GetById(int id)
+    {
+        return _context.Estado.Where(x => x.EstadoId == id).FirstOrDefault();
     }
 
     public void Iniciar()

@@ -10,6 +10,7 @@ public interface IItemRepository
 {
     void Iniciar();
     ICollection<Item> GetAll();
+    Item? GetById(int id);
 }
 public class ItemRepository : IItemRepository
 {
@@ -32,6 +33,11 @@ public class ItemRepository : IItemRepository
         return query.ToList();
     }
 
+    public Item? GetById(int id)
+    {
+        return _context.Item.Where(x => x.ItemId == id).FirstOrDefault();
+    }
+
     public void Iniciar()
     {
         if (_context.Item.Count() == 0)
@@ -46,8 +52,6 @@ public class ItemRepository : IItemRepository
 
             _context.Item.Add(oItem1);
             _context.Item.Add(oItem2);
-
-            _context.SaveChanges();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace DAL.Repositories;
 
 public interface IPedidoRepository
 {
-
+    void Guardar(Pedido pedido);
 }
 public class PedidoRepository : IPedidoRepository
 {
@@ -16,5 +16,10 @@ public class PedidoRepository : IPedidoRepository
     public PedidoRepository(EFContext efContext)
     {
         _context = efContext;
+    }
+
+    public void Guardar(Pedido pedido)
+    {
+       _context.Pedido.Add(pedido);
     }
 }

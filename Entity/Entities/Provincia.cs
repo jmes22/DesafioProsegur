@@ -13,7 +13,7 @@ namespace Entity.Entities
         private Impuesto impuesto;
         private ICollection<MateriaPrimaXItem> materiasPrimaXItem;
 
-        public int Id
+        public int ProvinciaId
         {
             get { return id; }
             set { id = value; }

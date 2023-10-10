@@ -11,7 +11,7 @@ namespace Entity.Entities
         private int id;
         private ICollection<Rol> roles;
 
-        public int Id
+        public int UsusarioId
         {
             get { return id; }
             set { id = value; }

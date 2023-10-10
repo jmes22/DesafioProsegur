@@ -11,7 +11,7 @@ namespace Entity.Entities
         private int id;
         private string nombre;
 
-        public int Id
+        public int RolId
         {
             get { return id; }
             set { id = value; }

@@ -20,7 +20,10 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var items = _unitOfwork.ItemRepository.GetAll();
+            PedidoViewModel viewModel = new PedidoViewModel(items);
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -32,7 +35,7 @@ namespace DesafioProsegur.Controllers
             foreach (var item in items)
             {
                 result.Add(new { 
-                    id = item.Id,
+                    id = item.ItemId,
                     nombre = item.Nombre,
                     precio = item.Precio,
                     cantidad = 0

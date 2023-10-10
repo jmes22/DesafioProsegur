@@ -12,7 +12,7 @@ namespace Entity.Entities
         private string nombre;
         private double porcentaje;
 
-        public int Id
+        public int ImpuestoId
         {
             get { return id; }
             set { id = value; }

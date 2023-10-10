@@ -1,6 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Pedido";
-}
+﻿@model PedidoViewModel;
+
 
 <div class="accordion" id="accordionPedido">
     <div class="accordion-item">
@@ -12,20 +11,27 @@
         <div id="collapsePedido" class="accordion-collapse collapse show" data-bs-parent="#accordionPedido">
             <div class="accordion-body">
                 <div class="row">
-                    <div class="col-12">
-                        <table id="tabla_pedido" class="table table-hover" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+                    @{
+                        foreach (var item in Model.Items)
+                        {
+                                    <div class="col-md-6 col-lg-4 p-2">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 id="nombre_@item.IdItem" class="card-title">@item.Nombre</h5>
+                                                <hr />
+
+                                                <p id="precio_@item.IdItem" data-precio="@item.Precio">precio unit: @item.Precio $</p>
+
+                                                <input id="cantidad_@item.IdItem" type="number" class="form-control" value="1" />
+                                                <button class="btn btn-primary mt-2" type="button" onclick="agregarAlPedido(@item.IdItem)">Lo quiero</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                        }
+                    }
                 </div>
+                <p id="txt_precio_total" data-precio="0">precio tatal: 0 $</p>
+
             </div>
         </div>
     </div>
@@ -36,83 +42,51 @@
 </div>
 
 <script type="text/javascript">
-    var tablaPedido = null;
-    const items = [];
+    const itemsPedido = [];
 
     $(document).ready(function () {
-        getItems();
-        const columnas = obtenerColumnasMateriaPrima();
-
-        tablaPedido = CrearTabla('tabla_pedido', columnas, items);
-
-        function obtenerColumnasMateriaPrima() {
-            return [
-                {
-                    'data': 'id',
-                    'searcheable': false,
-                    'visible': false,
-                    'ordereable': false,
-                    'defaultContent': ''
-                },
-                {
-                    'data': 'nombre',
-                    'searcheable': false,
-                    'visible': true,
-                    'ordereable': true,
-                    'defaultContent': ''
-                },
-                {
-                    'data': 'precio',
-                    'searcheable': false,
-                    'visible': true,
-                    'ordereable': true,
-                    'defaultContent': ''
-                },
-                {
-                    'searcheable': false,
-                    'ordereable': false,
-                    data: function (row, type, set) {
-                        var s = '';
-                        s += `<input id="cantidad_${row.id}" class='form-control' type='number' value="${row.cantidad}"></>`;
-                        return s;
-                    }
-                }
-            ]
-        }
-
-        $('#tabla_pedido').on('keyup', 'input[id^="cantidad_"]', function () {
-            // Obtener el ID único del campo de entrada
-            const campoId = $(this).attr('id');
-
-            // Obtener el valor modificado en el campo de entrada
-            const nuevoValor = $(this).val();
-
-            // Obtener la fila de DataTables
-            const fila = tablaPedido.row($(this).closest('tr'));
-
-            // Obtener los datos de la fila actual
-            const datosFila = fila.data();
-
-            // Actualizar la propiedad "cantidad" en los datos de la fila
-            if (nuevoValor === "") datosFila.cantidad = 0;
-            else datosFila.cantidad = parseInt(nuevoValor);
-        });
 
     });
 
-    function getItems() {
-        Ajax('GET', '/Item/GetAll', null, false, true, "Buscando...", getItemsResponse);
+    function agregarAlPedido(itemId) {
+        actualizarItemsPedido(itemId);
+        setPrecioTotal(getTotalPedido());
     }
 
-    function getItemsResponse(obj) {
-        return items.push(...obj.innerObject);
-    }
+    function actualizarItemsPedido(itemId) {
+        const cantidad = parseInt($("#cantidad_" + itemId).val());
+        const precioUnitario = parseFloat($(`#precio_${itemId}`).data("precio"));
 
+        if (cantidad === 0) {
+            const itemPedidoIndex = itemsPedido.findIndex(e => e.idItem == itemId);
+
+            if (itemPedidoIndex !== -1) {
+                itemsPedido.splice(itemPedidoIndex, 1);
+            }
+        } else {
+            const itemPedido = itemsPedido.find(e => e.idItem == itemId);
+
+            if (itemPedido === undefined) {
+                itemsPedido.push({
+                    idItem: itemId,
+                    nombre: $(`#nombre_${itemId}`).text(),
+                    cantidad: cantidad,
+                    precio: precioUnitario,
+                    total: precioUnitario * cantidad
+                });
+            } else {
+                const precioTotal = precioUnitario * cantidad;
+                itemPedido.cantidad = cantidad;
+                itemPedido.total = precioTotal;
+            }
+        }
+    }
+   
     function guardarPedido() {
         const data = {
             oViewModel:
             {
-                Items: getDataPedido()
+                Items: itemsPedido
             }
         };
 
@@ -121,9 +95,20 @@
 
     function savePedidoSuccess(response) {
         MsjAlertaExito('Aviso', 'Tu pedido se generó correctamente.');
+        limpiarDataPedido();
     }
 
-    function getDataPedido() {
-        return tablaPedido.rows().data().toArray();
+    function setPrecioTotal(precioTotal) {
+        $("#txt_precio_total").data("precio", precioTotal.toFixed(2));
+        $("#txt_precio_total").text(`precio total: ${precioTotal.toFixed(2)} $`);
+    }
+
+    function getTotalPedido() {
+        const precioTotal = itemsPedido.reduce((total, item) => total + item.total, 0);
+        return precioTotal;
+    }
+
+    function limpiarDataPedido() {
+        setPrecioTotal(0);
     }
 </script>

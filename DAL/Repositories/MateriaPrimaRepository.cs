@@ -33,7 +33,7 @@ public class MateriaPrimaRepository : IMateriaPrimaRepository
 
         foreach (var materiaExistente in materiasPrimaExistentes)
         {
-            var mpActualizado = materiasPrima.FirstOrDefault(m => m.Id == materiaExistente.Id);
+            var mpActualizado = materiasPrima.FirstOrDefault(m => m.MateriaPrimaId == materiaExistente.MateriaPrimaId);
 
             if (mpActualizado != null)
                 _context.Entry(materiaExistente).CurrentValues.SetValues(mpActualizado);

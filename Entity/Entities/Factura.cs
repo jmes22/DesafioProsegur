@@ -10,7 +10,7 @@ namespace Entity.Entities
     {
         private int id;
         private int precio;
-        public int Id
+        public int FacturaId
         {
             get { return id; }
             set { id = value; }

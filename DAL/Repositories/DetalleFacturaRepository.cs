@@ -9,7 +9,7 @@ namespace DAL.Repositories;
 
 public interface IDetalleFacturaRepository
 {
-    public int GetCantidad(int id, int idPropiedad);
+
 }
 
 public class DetalleFacturaRepository : IDetalleFacturaRepository
@@ -19,22 +19,5 @@ public class DetalleFacturaRepository : IDetalleFacturaRepository
     public DetalleFacturaRepository(EFContext efContext)
     {
         _context = efContext;
-    }
-
-    public int GetCantidad(int id, int idPropiedad)
-    {
-        try
-        {
-            var ambienteXPropiedad = _context.Estado.ToList();
-            if (ambienteXPropiedad == null) return 0;
-
-            return 1;
-        }
-        catch (Exception ex)
-        {
-            var a = 0;
-            throw;
-        }
-      
     }
 }

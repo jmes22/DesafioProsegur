@@ -8,9 +8,8 @@ namespace Entity.Common.Enums
 {
     public enum EstadoEnum
     {
-        ESPERA,
-        EJECUCION,
-        PAUSA,
-        FINALIZADO
+        PENDIENTE = 1,
+        EJECUCION = 2,
+        FINALIZADO = 3
     }
 }

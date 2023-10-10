@@ -13,15 +13,14 @@ namespace Entity.Entities
         private int id;
         private int idFactura;
         private Factura factura;
-        private ICollection<Pedido> pedidos;
 
-        public int Id
+        public int DetalleFacturaId
         {
             get { return id; }
             set { id = value; }
         }
 
-        public int IdFactura
+        public int FacturaId
         {
             get { return idFactura; }
             set { idFactura = value; }
@@ -31,12 +30,6 @@ namespace Entity.Entities
         {
             get { return factura; }
             set { factura = value; }
-        }
-
-        public virtual ICollection<Pedido> Pedidos
-        {
-            get { return pedidos; }
-            set { pedidos = value; }
         }
     }
 }

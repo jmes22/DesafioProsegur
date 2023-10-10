@@ -9,22 +9,16 @@ namespace Entity.Entities
     public class OrdenTrabajo
     {
         private int id;
-        private int idPedido;
         private DateTime fechaInicio;
         private DateTime? fechaFin;
+        private Pedido pedido;
         private Estado estado;
         private Item item;
 
-        public int Id
+        public int OrdenTrabajoId
         {
             get { return id; }
             set { id = value; }
-        }
-
-        public int IdPedido
-        {
-            get { return idPedido; }
-            set { idPedido = value; }
         }
 
         public DateTime FechaInicio
@@ -37,6 +31,12 @@ namespace Entity.Entities
         {
             get { return fechaFin; }
             set { fechaFin = value; }
+        }
+
+        public virtual Pedido Pedido
+        {
+            get { return pedido; }
+            set { pedido = value; }
         }
 
         public virtual Estado Estado

@@ -8,7 +8,7 @@
         private double precio;
         private ICollection<OrdenTrabajo> ordenes;
 
-        public int Id
+        public int PedidoId
         {
             get { return id; }
             set { id = value; }

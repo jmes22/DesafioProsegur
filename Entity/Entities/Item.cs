@@ -14,7 +14,7 @@ namespace Entity.Entities
         private int tiempoEjecucion;
         private ICollection<MateriaPrimaXItem> materiasPrimaXItem;
 
-        public int Id
+        public int ItemId
         {
             get { return id; }
             set { id = value; }

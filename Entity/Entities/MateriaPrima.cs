@@ -15,7 +15,7 @@ namespace Entity.Entities
         private int stock;
         private double precio;
 
-        public int Id
+        public int MateriaPrimaId
         {
             get { return id; }
             set { id = value; }
