@@ -21,23 +21,6 @@ namespace Entity.Entities
             set { id = value; }
         }
 
-        //public int ItemId
-        //{
-        //    get { return idItem; }
-        //    set { idItem = value; }
-        //}
-
-        //public int MateriaPrimaId
-        //{
-        //    get { return idMateriaPrima; }
-        //    set { idMateriaPrima = value; }
-        //}
-        //public int ProvinciaId
-        //{
-        //    get { return idProvincia; }
-        //    set { idProvincia = value; }
-        //}
-
         public virtual Item Item
         {
             get { return item; }

@@ -35,7 +35,10 @@ public class ItemRepository : IItemRepository
 
     public Item? GetById(int id)
     {
-        return _context.Item.Where(x => x.ItemId == id).FirstOrDefault();
+        return _context.Item.Where(x => x.ItemId == id)
+                            .Include(i => i.MateriasPrimaXItem)
+                            .ThenInclude(mp => mp.MateriaPrima)
+                            .FirstOrDefault();
     }
 
     public void Iniciar()

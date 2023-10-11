@@ -62,12 +62,12 @@ namespace Entity.Common
                 };
             }
 
-            public static JsonReturn ErrorConMsjSimple(string msj)
+            public static JsonReturn ErrorConMsjSimple(string msj = null)
             {
                 return new JsonReturn
                 {
                     InnerObject = null,
-                    MensajeError = msj,
+                    MensajeError = string.IsNullOrEmpty(msj) ? "Ocurrió un problema, reintente la operación por favor." : msj,
                     Success = false,
                     TipoError = 1,
                     TotalCount = 0

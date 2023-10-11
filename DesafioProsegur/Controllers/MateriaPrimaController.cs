@@ -35,7 +35,7 @@ namespace DesafioProsegur.Controllers
         [HttpPost]
         public JsonResult Guardar(MateriaPrimaViewModel oViewModel)
         {
-            string msjError = oViewModel.ValidarModelo(oViewModel);
+            oViewModel.ValidarModelo(oViewModel, out string msjError);
             if (!string.IsNullOrEmpty(msjError))
                 return Json(JsonReturn.ErrorConMsjSimple(msjError));
 

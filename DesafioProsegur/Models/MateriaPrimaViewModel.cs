@@ -6,17 +6,17 @@ namespace DesafioProsegur.Models
     {
         public ICollection<MateriaPrima> MateriasPrima {  get; set; }
 
-        public string ValidarModelo(MateriaPrimaViewModel oViewModel)
+        public string ValidarModelo(MateriaPrimaViewModel oViewModel, out string msjError)
         {
-            string msj = string.Empty;
+            msjError = string.Empty;
 
             foreach (var materiaPrima in oViewModel.MateriasPrima)
             {
                 if (materiaPrima.Stock <= 0)
-                    msj += "La cantidad de la materia prima: " + materiaPrima.Nombre + "</br> Tiene que ser mayor que 0. </br>";
+                    msjError += "La cantidad de la materia prima: " + materiaPrima.Nombre + "</br> Tiene que ser mayor que 0. </br>";
             }
 
-            return msj;
+            return msjError;
         }
     }
 }
