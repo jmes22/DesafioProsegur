@@ -1,6 +1,8 @@
 ﻿using DAL;
 using DesafioProsegur.Models;
 using Entity.Common;
+using Entity.Entities.Sistema;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -22,6 +24,9 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
+            if(SessionManager.TienePermiso(HttpContext, _unitOfwork))
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 

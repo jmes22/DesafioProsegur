@@ -1,10 +1,10 @@
-﻿using Entity.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using DAL.Context;
 using System;
 using System.Collections.Generic;
+using Entity.Entities.Sistema;
 
-namespace DAL.Repositories;
+namespace DAL.Repositories.Sistema;
 
 public interface IRolRepository
 {
@@ -30,10 +30,10 @@ public class RolRepository : IRolRepository
             oRol2.Nombre = "Empelado";
 
             Rol oRol3 = new Rol();
-            oRol2.Nombre = "Supervisor";
+            oRol3.Nombre = "Supervisor";
 
             Rol oRol4 = new Rol();
-            oRol2.Nombre = "Administrador";
+            oRol4.Nombre = "Administrador";
 
             _context.Rol.Add(oRol1);
             _context.Rol.Add(oRol2);

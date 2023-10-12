@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using DAL.Context;
 using DAL.Repositories;
+using DAL.Repositories.Sistema;
 
 namespace DAL
 {
@@ -20,6 +21,8 @@ namespace DAL
         IProvinciaRepository ProvinciaRepository { get; }
         IUsuarioRepository UsuarioRepository { get; }
         IRolRepository RolRepository { get; }
+        IAccionXRolRepository AccionXRolRepository { get; }
+        IAccionRepository AccionRepository { get; }
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -40,6 +43,8 @@ namespace DAL
         private readonly ProvinciaRepository _provinciaRepository;
         private readonly UsuarioRepository _usuarioRepository;
         private readonly RolRepository _rolRepository;
+        private readonly AccionXRolRepository _accionXRolRepository;
+        private readonly AccionRepository _accionRepository;
 
         public UnitOfWork(DbContextOptions<EFContext> dbContextOptions)
         {
@@ -62,6 +67,8 @@ namespace DAL
             _provinciaRepository = new ProvinciaRepository(_context);
             _usuarioRepository = new UsuarioRepository(_context);
             _rolRepository = new RolRepository(_context);
+            _accionRepository = new AccionRepository(_context);
+            _accionXRolRepository = new AccionXRolRepository(_context);
         }
 
         public IDetalleFacturaRepository DetalleFacturaRepository => _detalleFacturaRepository;
@@ -85,6 +92,10 @@ namespace DAL
         public IUsuarioRepository UsuarioRepository => _usuarioRepository;
 
         public IRolRepository RolRepository => _rolRepository;
+
+        public IAccionXRolRepository AccionXRolRepository => _accionXRolRepository;
+
+        public IAccionRepository AccionRepository => _accionRepository;
 
         public void CommitTransaction()
         {

@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Entities
+namespace Entity.Entities.Sistema
 {
-    public class Ususario
+    public class Accion
     {
         private int id;
-        private ICollection<Rol> roles;
+        private string nombre;
 
-        public int UsusarioId
+        public int AccionId
         {
             get { return id; }
             set { id = value; }
         }
 
-        public virtual ICollection<Rol> Roles
+        public string Nombre
         {
-            get { return roles; }
-            set { roles = value; }
+            get { return nombre; }
+            set { nombre = value; }
         }
     }
 }

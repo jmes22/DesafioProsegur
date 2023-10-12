@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entity.Entities;
+using Entity.Entities.Sistema;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context;
@@ -36,8 +37,10 @@ public partial class EFContext : DbContext
     public virtual DbSet<Provincia> Provincia { get; set; }
 
     public virtual DbSet<Rol> Rol { get; set; }
+    public virtual DbSet<Accion> Accion { get; set; }
+    public virtual DbSet<AccionXRol> AccionXRol { get; set; }
 
-    public virtual DbSet<Ususario> Ususario { get; set; }
+    public virtual DbSet<Usuario> Usuario { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -122,11 +125,25 @@ public partial class EFContext : DbContext
             entity.ToTable("Rol");
         });
 
-        modelBuilder.Entity<Ususario>(entity =>
+        modelBuilder.Entity<Accion>(entity =>
         {
-            entity.HasKey(e => e.UsusarioId);
+            entity.HasKey(e => e.AccionId);
 
-            entity.ToTable("Ususario");
+            entity.ToTable("Accion");
+        });
+
+        modelBuilder.Entity<AccionXRol>(entity =>
+        {
+            entity.HasKey(e => e.AccionXRolId);
+
+            entity.ToTable("AccionXRol");
+        });
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.UsuarioId);
+
+            entity.ToTable("Usuario");
         });
 
         OnModelCreatingPartial(modelBuilder);

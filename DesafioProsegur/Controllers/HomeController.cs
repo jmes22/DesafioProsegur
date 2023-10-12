@@ -1,7 +1,9 @@
 ﻿using DAL;
 using DesafioProsegur.Models;
+using Entity.Entities.Sistema;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace DesafioProsegur.Controllers
 {
@@ -19,8 +21,9 @@ namespace DesafioProsegur.Controllers
             _unitOfwork = unitOfwork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string rol)
         {
+            SessionManager.SetRol(HttpContext, rol);
             insertarDataInicial();
 
             return View();
@@ -34,8 +37,10 @@ namespace DesafioProsegur.Controllers
             _unitOfwork.ImpuestoRepository.Iniciar();
             _unitOfwork.ProvinciaRepository.Iniciar();
             _unitOfwork.MateriaPrimaXItemRepository.Iniciar();
-            //_unitOfwork.RolRepository.Iniciar();
-            //_unitOfwork.UsuarioRepository.Iniciar();
+            _unitOfwork.RolRepository.Iniciar();
+            _unitOfwork.AccionRepository.Iniciar();
+            _unitOfwork.AccionXRolRepository.Iniciar();
+            _unitOfwork.UsuarioRepository.Iniciar();
             _unitOfwork.CommitTransaction();
         }
 
