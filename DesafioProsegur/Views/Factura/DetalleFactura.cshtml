@@ -1,36 +1,23 @@
-﻿@{
-    ViewData["Title"] = "Factura";
-}
-
+﻿
 <div class="accordion" id="accordionFactura">
     <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFactura" aria-expanded="true" aria-controls="collapseFactura">
-                <h2>Facturas</h2>
+                <h2>Detalle de factura</h2>
             </button>
         </h2>
         <div id="collapseFactura" class="accordion-collapse collapse show" data-bs-parent="#accordionFactura">
             <div class="accordion-body">
                 <div class="row">
                     <div class="col-12">
-                        <table id="tabla_factura" class="table table-hover" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Fecha Facturación</th>
-                                    <th>Precio</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                     
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-12 mt-2" style="text-align: right;">
-        <a href="/Home" class="btn btn-primary">Volver</a>
+        <a href="/Factura" class="btn btn-primary">Volver</a>
     </div>
 </div>
 
@@ -39,7 +26,7 @@
     const facturas = [];
 
     $(document).ready(function () {
-        getFacturas();
+        getPedidos();
         const columnas = obtenerColumnasTablaFactura();
 
         tablaFactura = CrearTabla('tabla_factura', columnas, facturas);
@@ -66,16 +53,13 @@
                     'visible': true,
                     'ordereable': true,
                     'defaultContent': ''
-                },
+                }
                 {
                     'searcheable': false,
                     'ordereable': false,
                     data: function (row, type, set) {
                         var s = '';
-
-                        if (row.id === 0) s += `<a href="/Factura/DetalleFactura?idFactura=${row.id}&idPedido=${row.idPedido}" class="btn btn-primary" type="button">Facturar</a>`;
-                        else s += `<a href="/Factura/DetalleFactura?idFactura=${row.id}" class="btn btn-primary" type="button">Ver detalle</a>`;
-
+                        s += `<button id="ver_detalle${row.id}" class='btn btn-success'">Ver detalle</>`;
                         return s;
                     }
                 }
@@ -83,11 +67,11 @@
         }
     });
 
-    function getFacturas() {
+    function getPedidos() {
         Ajax('GET', '/Factura/GetAll', null, false, true, "Buscando...", getFacturasResponse);
     }
 
-    function getFacturasResponse(obj) {
+    function getPedidosResponse(obj) {
         return facturas.push(...obj.innerObject);
     }
 </script>

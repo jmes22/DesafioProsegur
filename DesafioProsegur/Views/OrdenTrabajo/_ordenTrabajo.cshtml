@@ -113,6 +113,7 @@
 
     function ejecutarResponse(obj) {
         MsjAlertaExito('Aviso', 'Acción ejecutada correctamente.');
+        RefreshTabla(tablaOrdenTrabajo, ordenesTrabajo);
     }
 
     function getOrdenTrabajo(idPedido) {
@@ -121,8 +122,6 @@
 
     function getOrdenesTrabajoResponse(obj) {
         ordenesTrabajo.push(...obj.innerObject);
-        tablaOrdenTrabajo.clear();
-        tablaOrdenTrabajo.rows.add(ordenesTrabajo);
-        tablaOrdenTrabajo.draw();
+        RefreshTabla(tablaOrdenTrabajo, ordenesTrabajo);
     }
 </script>

@@ -11,8 +11,6 @@ namespace Entity.Entities
         private double precio;
         private ICollection<OrdenTrabajo> ordenes;
 
-        private IStateStrategy stateStrategy;
-
         public int PedidoId
         {
             get { return id; }

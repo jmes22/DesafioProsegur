@@ -16,8 +16,6 @@
 
     function getOrdenesTrabajoResponse(obj) {
         ordenesTrabajo.push(...obj.innerObject);
-        tablaOrdenTrabajo.clear();
-        tablaOrdenTrabajo.rows.add(ordenesTrabajo);
-        tablaOrdenTrabajo.draw();
+        RefreshTabla(tablaOrdenTrabajo, ordenesTrabajo);
     }
 </script>

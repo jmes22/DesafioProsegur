@@ -31,8 +31,10 @@ function CrearTabla(idTabla, columnas, datos, entidad) {
     });
 }
 
-function RefreshTabla(tabla) {
+function RefreshTabla(tabla, data) {
     if (tabla) {
-        tabla.ajax.reload();
+        tabla.clear();
+        tabla.rows.add(data);
+        tabla.draw();
     }
 }
