@@ -99,14 +99,19 @@ namespace DesafioProsegur.Controllers
             _unitOfwork.OrdenTrabajoRepository.Guardar(orden);
             _unitOfwork.CommitTransaction();
 
-            return Json(JsonReturn.SuccessConRetorno(new
+            if (estados.Count > 0)
             {
-                id = orden.OrdenTrabajoId,
-                fechaInicio = orden.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
-                fechaFin = orden.FechaFin == null ? "" : orden.FechaFin.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
-                estado = orden.Estado.Nombre,
-                tiempoEstimadoFin = orden.FechaInicio.AddMinutes(orden.Item.TiempoEjecucion) - orden.FechaInicio
-            }));
+                result = new
+                {
+                    id = orden.OrdenTrabajoId,
+                    fechaInicio = orden.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
+                    fechaFin = orden.FechaFin == null ? "" : orden.FechaFin.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
+                    estado = orden.Estado.Nombre,
+                    tiempoEstimadoFin = orden.FechaInicio.AddMinutes(orden.Item.TiempoEjecucion) - orden.FechaInicio
+                };
+            }
+       
+            return Json(JsonReturn.SuccessConRetorno(result));
         }
     }
 }

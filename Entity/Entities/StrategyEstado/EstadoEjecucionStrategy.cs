@@ -17,7 +17,7 @@ namespace Entity.Entities.StrategyEstado
         public void Ejecutar(OrdenTrabajo orden, ICollection<Estado> estados)
         {
             orden.FechaFin = DateTime.Now;
-            orden.Estado = estados.Where(x => x.EstadoId == (int)EstadoEnum.FINALIZADO).First();
+            orden.Estado = estados.Where(x => x.EstadoId == (int)EstadoEnum.EJECUCION).First();
         }
     }
 }
