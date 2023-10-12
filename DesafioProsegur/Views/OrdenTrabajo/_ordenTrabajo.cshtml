@@ -99,7 +99,10 @@
                     'ordereable': false,
                     data: function (row, type, set) {
                         var s = '';
+
+                        //if (row.estado != `${@Entity.Common.Enums.EstadoEnum.FINALIZADO.ToString()})`
                         s += `<button id="ejecutar_${row.id}" class='btn btn-success' onclick='ejecutar(${row.id})'">Ejectuar</>`;
+
                         return s;
                     }
                 }
@@ -113,6 +116,15 @@
 
     function ejecutarResponse(obj) {
         MsjAlertaExito('Aviso', 'Acción ejecutada correctamente.');
+
+        const orden = ordenesTrabajo.find(o => o.id === obj.innerObject.id);
+
+        if (orden != undefined) {
+            orden.estado = obj.innerObject.estado;
+            orden.fechaInicio = obj.innerObject.fechaInicio;
+            orden.fechaFin = obj.innerObject.fechaFin;
+        }
+
         RefreshTabla(tablaOrdenTrabajo, ordenesTrabajo);
     }
 

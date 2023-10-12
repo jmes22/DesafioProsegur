@@ -9,7 +9,6 @@ namespace Entity.Entities
     public class Factura
     {
         private int id;
-        private int precio;
         private DateTime fecha;
         ICollection<DetalleFactura> detalleFactura;
 
@@ -17,12 +16,6 @@ namespace Entity.Entities
         {
             get { return id; }
             set { id = value; }
-        }
-
-        public int Precio
-        {
-            get { return precio; }
-            set { precio = value; }
         }
 
         public DateTime Fecha

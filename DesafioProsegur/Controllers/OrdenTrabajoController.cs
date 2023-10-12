@@ -47,7 +47,7 @@ namespace DesafioProsegur.Controllers
                         id = orden.OrdenTrabajoId,
                         idPedido = pedido.PedidoId,
                         fechaPedido = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
-                        fechaInicio = orden.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
+                        fechaInicio = orden.FechaInicio == null ? "" : orden.FechaInicio.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                         fechaFin = orden.FechaFin == null ? "" : orden.FechaFin.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                         estado = orden.Estado.Nombre,
                         tiempoEstimadoFin = orden.Item.TiempoEjecucion
@@ -61,9 +61,9 @@ namespace DesafioProsegur.Controllers
         [HttpGet]
         public JsonResult GetOrdenesTrabajoByIdPedido(int idPedido)
         {
-                var pedido = _unitOfwork.PedidoRepository.GetById(idPedido);
+            var pedido = _unitOfwork.PedidoRepository.GetById(idPedido);
             List<object> result = new List<object>();
-           
+
             if (pedido == null)
                 return Json(JsonReturn.SuccessConRetorno(result));
 
@@ -74,7 +74,7 @@ namespace DesafioProsegur.Controllers
                     id = orden.OrdenTrabajoId,
                     idPedido = pedido.PedidoId,
                     fechaPedido = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
-                    fechaInicio = orden.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
+                    fechaInicio = orden.FechaInicio == null ? "" : orden.FechaInicio.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                     fechaFin = orden.FechaFin == null ? "" : orden.FechaFin.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                     estado = orden.Estado.Nombre,
                     tiempoEstimadoFin = orden.Item.TiempoEjecucion
@@ -104,13 +104,13 @@ namespace DesafioProsegur.Controllers
                 result = new
                 {
                     id = orden.OrdenTrabajoId,
-                    fechaInicio = orden.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
+                    fechaInicio = orden.FechaInicio == null ? "" : orden.FechaInicio.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                     fechaFin = orden.FechaFin == null ? "" : orden.FechaFin.Value.ToString("dd/MM/yyyy:HH:mm:ss"),
                     estado = orden.Estado.Nombre,
-                    tiempoEstimadoFin = orden.FechaInicio.AddMinutes(orden.Item.TiempoEjecucion) - orden.FechaInicio
+                    tiempoEstimadoFin = orden.Item.TiempoEjecucion // orden.FechaInicio.Value.AddMinutes(orden.Item.TiempoEjecucion) - orden.FechaInicio
                 };
             }
-       
+
             return Json(JsonReturn.SuccessConRetorno(result));
         }
     }

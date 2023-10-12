@@ -1,4 +1,5 @@
-﻿
+﻿@model FacturaViewModel
+
 <div class="accordion" id="accordionFactura">
     <div class="accordion-item">
         <h2 class="accordion-header">
@@ -10,68 +11,53 @@
             <div class="accordion-body">
                 <div class="row">
                     <div class="col-12">
-                     
+                        <h5 id="fecha_pedido_@Model.Id" class="card-title">Fecha y hora del pedido: @Model.FechaPedido</h5>
+                        @{
+                            foreach (var item in Model.ItemsViewModel)
+                            {
+                                <div class="col-md-6 col-lg-4 p-2">
+
+
+                                    <h5 id="nombre_@item.IdItem" class="card-title">Item: @item.Nombre</h5>
+                                    <hr />
+                                    <p id="precio_@item.IdItem" data-precio="@item.Precio">Precio unit: @item.Precio $</p>
+                                    <hr />
+                                    <p id="cantidad_@item.IdItem" data-precio="@item.Precio">Cantidad: @item.Cantidad</p>
+                                    <hr />
+                                    <p id="total_@item.IdItem" data-precio="@item.Precio">Total: @item.Total $</p>
+                                </div>
+                            }
+
+                            <h5 id="precio_total_@Model.Id" class="card-title">Precio total del pedido: @Model.PrecioTotal $</h5>
+
+                            <div class="col-12 mt-2" style="text-align: right;">
+                                @if (@Model.Id == 0){
+                                    <button id="btn_guardar" class="btn btn-primary" type="button" onclick="guardarFactura(@Model.IdPedido)">Facturar</button>
+                                }
+                                <a href="/Factura" class="btn btn-primary">Volver</a>
+                            </div>
+
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-12 mt-2" style="text-align: right;">
-        <a href="/Factura" class="btn btn-primary">Volver</a>
-    </div>
+
 </div>
 
 <script type="text/javascript">
-    var tablaFactura = null;
-    const facturas = [];
-
     $(document).ready(function () {
-        getPedidos();
-        const columnas = obtenerColumnasTablaFactura();
-
-        tablaFactura = CrearTabla('tabla_factura', columnas, facturas);
-
-        function obtenerColumnasTablaFactura() {
-            return [
-                {
-                    'data': 'id',
-                    'searcheable': false,
-                    'visible': true,
-                    'ordereable': false,
-                    'defaultContent': ''
-                },
-                {
-                    'data': 'fecha',
-                    'searcheable': false,
-                    'visible': true,
-                    'ordereable': true,
-                    'defaultContent': ''
-                },
-                {
-                    'data': 'precio',
-                    'searcheable': false,
-                    'visible': true,
-                    'ordereable': true,
-                    'defaultContent': ''
-                }
-                {
-                    'searcheable': false,
-                    'ordereable': false,
-                    data: function (row, type, set) {
-                        var s = '';
-                        s += `<button id="ver_detalle${row.id}" class='btn btn-success'">Ver detalle</>`;
-                        return s;
-                    }
-                }
-            ]
-        }
+     
     });
 
-    function getPedidos() {
-        Ajax('GET', '/Factura/GetAll', null, false, true, "Buscando...", getFacturasResponse);
+    function guardarFactura(idPedido) {
+        Ajax('POST', '/Factura/Guardar', { idPedido: idPedido }, false, true, "Guardando...", guardarFacturaResponse);
     }
 
-    function getPedidosResponse(obj) {
-        return facturas.push(...obj.innerObject);
+    function guardarFacturaResponse(idPedido) {
+        $("#btn_guardar").remove();
+        MsjAlertaExito('Aviso', 'Guardado correctamente.');
     }
+
 </script>

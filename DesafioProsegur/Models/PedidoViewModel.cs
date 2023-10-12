@@ -6,7 +6,10 @@ namespace DesafioProsegur.Models
     {
         public ICollection<ItemsViewModel> Items { get; set; }
 
-        public PedidoViewModel() { }
+        public PedidoViewModel() 
+        {
+            this.Items = new List<ItemsViewModel>();
+        }
 
         public PedidoViewModel(ICollection<Item> items)
         {
@@ -15,14 +18,8 @@ namespace DesafioProsegur.Models
             foreach (var item in items)
             {
                 this.Items.Add(
-                    new ItemsViewModel 
-                    { 
-                        IdItem = item.ItemId,
-                        Nombre = item.Nombre, 
-                        Precio = item.Precio,
-                        Cantidad = 0 ,
-                        Total = 0
-                    });
+                    new ItemsViewModel(item.ItemId, item.Nombre, item.Precio, 0, 0)
+                );
             }
         }
 

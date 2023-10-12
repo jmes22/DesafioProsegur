@@ -30,10 +30,10 @@ namespace Entity.Entities
             switch (EstadoId)
             {
                 case (int)EstadoEnum.PENDIENTE:
-                    stateStrategy = new EstadoEjecucionStrategy();
+                    stateStrategy = new EstadoPendienteStrategy ();
                     break;
                 case (int)EstadoEnum.EJECUCION:
-                    stateStrategy = new EstadoFinalizadoStrategy();
+                    stateStrategy = new EstadoEjecucionStrategy();
                     break;
                 case (int)EstadoEnum.FINALIZADO:
                     stateStrategy = new EstadoFinalizadoStrategy();

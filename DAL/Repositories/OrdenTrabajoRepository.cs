@@ -24,10 +24,10 @@ public class OrdenTrabajoRepository : IOrdenTrabajoRepository
     public OrdenTrabajo? GetById(int id)
     {
         return _context.OrdenTrabajo
-                       .Where(x => x.OrdenTrabajoId == id)
-                       .Include(x => x.Item)
-                       .Include(x => x.Estado)
-                       .FirstOrDefault();
+                                .Include(o => o.Estado)
+                                .Include(x => x.Item)
+                                .Where(x => x.OrdenTrabajoId == id)
+                                .FirstOrDefault();
     }
     public void Guardar(OrdenTrabajo otActualizado)
     {

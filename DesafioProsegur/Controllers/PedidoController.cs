@@ -66,7 +66,6 @@ namespace DesafioProsegur.Controllers
 
             var pedido = new PedidoBuilder()
            .WithFechaInicio(DateTime.Now)
-           .WithPrecio(precioTotal)
            .Build();
 
             foreach (var item in oViewModel.Items)
@@ -82,7 +81,7 @@ namespace DesafioProsegur.Controllers
                 for (int i = 0; i < item.Cantidad; i++)
                 {
                     var ordenTrabajo = new OrdenTrabajoBuilder()
-                    .WithFechaInicio(DateTime.Now)
+                    .WithPrecio(item.Precio)
                     .WithPedido(pedido)
                     .WithEstado(estado)
                     .WithItem(itemBD)

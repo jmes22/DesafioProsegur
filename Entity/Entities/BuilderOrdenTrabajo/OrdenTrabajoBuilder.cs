@@ -22,6 +22,12 @@ namespace Entity.Entities.BuilderOrdenTrabajo
             return this;
         }
 
+        public OrdenTrabajoBuilder WithPrecio(double precio)
+        {
+            ordenTrabajo.Precio = precio;
+            return this;
+        }
+
         public OrdenTrabajoBuilder WithFechaFin(DateTime? fechaFin)
         {
             ordenTrabajo.FechaFin = fechaFin;

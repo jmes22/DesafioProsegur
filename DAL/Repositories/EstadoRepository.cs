@@ -38,13 +38,13 @@ public class EstadoRepository : IEstadoRepository
         if (_context.Estado.Count() == 0)
         {
             Estado oEstado1 = new Estado();
-            oEstado1.Nombre = "pendiente";
+            oEstado1.Nombre = "PENDIENTE";
 
             Estado oEstado2 = new Estado();
-            oEstado2.Nombre = "en ejecución";
+            oEstado2.Nombre = "EJECUCION";
 
             Estado oEstado3 = new Estado();
-            oEstado3.Nombre = "finalizada";
+            oEstado3.Nombre = "FINALIZADO";
 
             _context.Estado.Add(oEstado1);
             _context.Estado.Add(oEstado2);

@@ -26,7 +26,42 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult DetalleFactura(int idFactura, int idPedido)
         {
-            return View();
+            FacturaViewModel viewModel = new FacturaViewModel();
+            viewModel.Id = idFactura;
+
+            var factura = idFactura == 0 ? null : _unitOfwork.FacturaRepository.GetById(idFactura);
+              
+            if (idFactura != 0 && factura == null)
+                return RedirectToAction("Index");
+
+            var pedido = idFactura != 0 ? factura?.DetalleFactura.First().Pedido : _unitOfwork.PedidoRepository.GetById(idPedido);
+
+            if (pedido == null)
+                return RedirectToAction("Index");
+
+            crearModelo(viewModel, pedido);
+            return View(viewModel);
+        }
+
+        private void crearModelo(FacturaViewModel viewModel, Pedido pedido) {
+            viewModel.IdPedido = pedido.PedidoId;
+
+            var ordenesTrabajo = pedido.Ordenes.GroupBy(x => x.Item);
+            foreach (var orden in ordenesTrabajo)
+            {
+                var ordenTrabjo = orden.First();
+
+                var id = ordenTrabjo.Item.ItemId;
+                var nombre = ordenTrabjo.Item.Nombre;
+                var precio = ordenTrabjo.Precio;
+                var cantidad = orden.Count();
+                var total = orden.Sum(x => x.Precio);
+
+                viewModel.ItemsViewModel.Add(new ItemsViewModel(id, nombre, precio, cantidad, total));
+            }
+
+            viewModel.FechaPedido = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss");
+            viewModel.PrecioTotal = pedido.Precio;
         }
 
         [HttpGet]
@@ -39,30 +74,39 @@ namespace DesafioProsegur.Controllers
             foreach (var factura in facturas)
             {
                 var pedido = factura.DetalleFactura.Select(x => x.Pedido).FirstOrDefault();
-
-                viewModel.Add(new FacturaViewModel
-                {
-                    Id = factura.FacturaId,
-                    IdPedido = pedido?.PedidoId ?? 0,
-                    FechaFactura = factura.Fecha.ToString("dd/MM/yyyy:HH:mm:ss"),
-                    Precio = pedido?.Precio ?? 0
-                });
+                if (pedido == null) continue;
+                viewModel.Add(new FacturaViewModel(factura, pedido));
             }
 
             var pedidosNoEnModelo = pedidos.Where(pedido => !viewModel.Any(vm => vm.IdPedido == pedido.PedidoId));
 
             foreach (var pedido in pedidosNoEnModelo)
             {
-                viewModel.Add(new FacturaViewModel
-                {
-                    Id = 0, 
-                    IdPedido = pedido.PedidoId,
-                    FechaFactura = "", 
-                    Precio = pedido.Precio
-                });
+                viewModel.Add(new FacturaViewModel(pedido));
             }
 
             return Json(JsonReturn.SuccessConRetorno(viewModel));
+        }
+
+        [HttpPost]
+        public JsonResult Guardar(int idPedido)
+        {
+            var pedido = _unitOfwork.PedidoRepository.GetById(idPedido);
+            if (pedido == null)
+                return Json(JsonReturn.ErrorConMsjSimple());
+
+            Factura factura = new Factura();
+            factura.Fecha = DateTime.Now;
+
+            DetalleFactura detalle = new DetalleFactura();
+            detalle.Factura = factura;
+            detalle.Pedido = pedido;
+
+            _unitOfwork.FacturaRepository.Guardar(factura);
+            _unitOfwork.DetalleFacturaRepository.Guardar(detalle);
+            _unitOfwork.CommitTransaction();
+
+            return Json(JsonReturn.SuccessSinRetorno());
         }
     }
 }

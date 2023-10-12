@@ -9,7 +9,7 @@ namespace DAL.Repositories;
 
 public interface IDetalleFacturaRepository
 {
-
+    void Guardar(DetalleFactura detalle);
 }
 
 public class DetalleFacturaRepository : IDetalleFacturaRepository
@@ -19,5 +19,10 @@ public class DetalleFacturaRepository : IDetalleFacturaRepository
     public DetalleFacturaRepository(EFContext efContext)
     {
         _context = efContext;
+    }
+
+    public void Guardar(DetalleFactura detalle)
+    {
+        _context.DetalleFactura.Add(detalle);
     }
 }

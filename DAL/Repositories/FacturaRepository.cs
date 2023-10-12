@@ -10,6 +10,7 @@ public interface IFacturaRepository
 {
     Factura? GetById(int id);
     ICollection<Factura> GetAll();
+    void Guardar(Factura factura);
 }
 public class FacturaRepository : IFacturaRepository
 {
@@ -37,5 +38,10 @@ public class FacturaRepository : IFacturaRepository
             .ThenInclude(p => p.Ordenes)
             .ThenInclude(o => o.Item)
             .FirstOrDefault();
+    }
+
+    public void Guardar(Factura factura)
+    {
+        _context.Factura.Add(factura);
     }
 }
