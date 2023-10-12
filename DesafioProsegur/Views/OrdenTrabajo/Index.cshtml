@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Orden Trabajo";
+}
+
+<partial name="_ordenTrabajo" />
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        getOrdenesTrabajo();
+    });
+
+    function getOrdenesTrabajo() {
+        Ajax('GET', '/OrdenTrabajo/GetOrdenesTrabajo', null, false, true, "Buscando...", getOrdenesTrabajoResponse);
+    }
+
+    function getOrdenesTrabajoResponse(obj) {
+        ordenesTrabajo.push(...obj.innerObject);
+        tablaOrdenTrabajo.clear();
+        tablaOrdenTrabajo.rows.add(ordenesTrabajo);
+        tablaOrdenTrabajo.draw();
+    }
+</script>

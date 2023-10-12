@@ -2,7 +2,89 @@
     ViewData["Title"] = "Factura";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Factura</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="accordion" id="accordionFactura">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFactura" aria-expanded="true" aria-controls="collapseFactura">
+                <h2>Facturas</h2>
+            </button>
+        </h2>
+        <div id="collapseFactura" class="accordion-collapse collapse show" data-bs-parent="#accordionFactura">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tabla_factura" class="table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Fecha Facturación</th>
+                                    <th>Precio</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-2" style="text-align: right;">
+        <a href="/Home" class="btn btn-primary">Volver</a>
+    </div>
 </div>
+
+<script type="text/javascript">
+    var tablaFactura = null;
+    const facturas = [];
+
+    $(document).ready(function () {
+        getPedidos();
+        const columnas = obtenerColumnasTablaFactura();
+
+        tablaFactura = CrearTabla('tabla_factura', columnas, facturas);
+
+        function obtenerColumnasTablaFactura() {
+            return [
+                {
+                    'data': 'id',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': false,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'fecha',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'precio',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                }
+                {
+                    'searcheable': false,
+                    'ordereable': false,
+                    data: function (row, type, set) {
+                        var s = '';
+                        s += `<button id="ver_detalle${row.id}" class='btn btn-success'">Ver detalle</>`;
+                        return s;
+                    }
+                }
+            ]
+        }
+    });
+
+    function getPedidos() {
+        Ajax('GET', '/Factura/GetAll', null, false, true, "Buscando...", getFacturasResponse);
+    }
+
+    function getPedidosResponse(obj) {
+        return facturas.push(...obj.innerObject);
+    }
+</script>

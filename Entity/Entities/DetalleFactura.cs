@@ -13,6 +13,7 @@ namespace Entity.Entities
         private int id;
         private int idFactura;
         private Factura factura;
+        private Pedido pedido;
 
         public int DetalleFacturaId
         {
@@ -30,6 +31,12 @@ namespace Entity.Entities
         {
             get { return factura; }
             set { factura = value; }
+        }
+
+        public virtual Pedido Pedido
+        {
+            get { return pedido; }
+            set { pedido = value; }
         }
     }
 }

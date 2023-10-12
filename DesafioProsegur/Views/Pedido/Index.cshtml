@@ -1,15 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Pedido";
-}
-
-<div class="accordion" id="accordionPedido">
+﻿<div class="accordion mt-2" id="accordionDetallePedido">
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePedido" aria-expanded="true" aria-controls="collapsePedido">
-                <h2>Hace tu pedido</h2>
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetallePedido" aria-expanded="true" aria-controls="collapseDetallePedido">
+                <h2>Orden de trabajo</h2>
             </button>
         </h2>
-        <div id="collapsePedido" class="accordion-collapse collapse show" data-bs-parent="#accordionPedido">
+        <div id="collapseDetallePedido" class="accordion-collapse collapse show" data-bs-parent="#accordionDetallePedido">
             <div class="accordion-body">
                 <div class="row">
                     <div class="col-12">
@@ -17,9 +13,11 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
+                                    <th>Item</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Estado</th>
+                                    <th>Tiempo En Ejecucion</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -29,33 +27,38 @@
             </div>
         </div>
     </div>
-    <div class="col-12 mt-2" style="text-align: right;">
-        <button class="btn btn-primary" type="button" onclick="guardarPedido()">Confirmar pedido</button>
-        <a href="/Home" class="btn btn-primary">Volver</a>
-    </div>
 </div>
 
+<partial name="../OrdenTrabajo/_ordenTrabajo" />
+
 <script type="text/javascript">
-    var tablaPedido = null;
-    const items = [];
+    const pedidos = [];
+    var tablaPedido = null;;
 
     $(document).ready(function () {
-        getItems();
-        const columnas = obtenerColumnasMateriaPrima();
+        getPedidos();
+        const columnas = obtenerColumnasTablaPedidos();
 
-        tablaPedido = CrearTabla('tabla_pedido', columnas, items);
+        tablaPedido = CrearTabla('tabla_pedido', columnas, pedidos);
 
-        function obtenerColumnasMateriaPrima() {
+        function obtenerColumnasTablaPedidos() {
             return [
                 {
                     'data': 'id',
                     'searcheable': false,
-                    'visible': false,
+                    'visible': true,
                     'ordereable': false,
                     'defaultContent': ''
                 },
                 {
-                    'data': 'nombre',
+                    'data': 'fechaInicio',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },   
+                {
+                    'data': 'fechaFin',
                     'searcheable': false,
                     'visible': true,
                     'ordereable': true,
@@ -69,62 +72,34 @@
                     'defaultContent': ''
                 },
                 {
+                    'data': 'estado',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
                     'searcheable': false,
                     'ordereable': false,
                     data: function (row, type, set) {
                         var s = '';
-                        s += `<input id="cantidad_${row.id}" class='form-control' type='number' value="${row.cantidad}"></>`;
+                        s += `<button id="ver_detalle${row.id}" class='btn btn-success' onclick='verDetalle(${row.id})'">Ver detalle</>`;
                         return s;
                     }
                 }
             ]
         }
-
-        $('#tabla_pedido').on('keyup', 'input[id^="cantidad_"]', function () {
-            // Obtener el ID único del campo de entrada
-            const campoId = $(this).attr('id');
-
-            // Obtener el valor modificado en el campo de entrada
-            const nuevoValor = $(this).val();
-
-            // Obtener la fila de DataTables
-            const fila = tablaPedido.row($(this).closest('tr'));
-
-            // Obtener los datos de la fila actual
-            const datosFila = fila.data();
-
-            // Actualizar la propiedad "cantidad" en los datos de la fila
-            if (nuevoValor === "") datosFila.cantidad = 0;
-            else datosFila.cantidad = parseInt(nuevoValor);
-        });
-
     });
 
-    function getItems() {
-        Ajax('GET', '/Item/GetAll', null, false, true, "Buscando...", getItemsResponse);
+    function getPedidos() {
+        Ajax('GET', '/Pedido/GetAll', null, false, true, "Buscando...", getPedidosResponse);
     }
 
-    function getItemsResponse(obj) {
-        return items.push(...obj.innerObject);
-    }
-
-    function guardarPedido() {
-        const data = {
-            oViewModel:
-            {
-                Items: getDataPedido()
-            }
-        };
-
-        Ajax('POST', '/Pedido/Guardar', data, false, true, "Espere...", savePedidoSuccess);
-    }
-
-    function savePedidoSuccess(response) {
-        MsjAlertaExito('Aviso', 'Tu pedido se generó correctamente.');
+    function getPedidosResponse(obj) {
+        return pedidos.push(...obj.innerObject);
     }
     
-
-    function getDataPedido() {
-        return tablaPedido.rows().data().toArray();
+    function verDetalle(idPedido) { 
+        getOrdenTrabajo(idPedido);
     }
 </script>

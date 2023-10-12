@@ -11,6 +11,7 @@ public interface IEstadoRepository
 {
     void Iniciar();
     Estado? GetById(int id);
+    ICollection<Estado> GetAll();
 }
 
 public class EstadoRepository : IEstadoRepository
@@ -20,6 +21,11 @@ public class EstadoRepository : IEstadoRepository
     public EstadoRepository(EFContext efContext)
     {
         _context = efContext;
+    }
+
+    public ICollection<Estado> GetAll()
+    {
+        return _context.Estado.ToList();
     }
 
     public Estado? GetById(int id)
@@ -32,21 +38,17 @@ public class EstadoRepository : IEstadoRepository
         if (_context.Estado.Count() == 0)
         {
             Estado oEstado1 = new Estado();
-            oEstado1.Nombre = "en espera";
+            oEstado1.Nombre = "pendiente";
 
             Estado oEstado2 = new Estado();
             oEstado2.Nombre = "en ejecución";
 
             Estado oEstado3 = new Estado();
-            oEstado3.Nombre = "en pausa";
-
-            Estado oEstado4 = new Estado();
-            oEstado4.Nombre = "finalizada";
+            oEstado3.Nombre = "finalizada";
 
             _context.Estado.Add(oEstado1);
             _context.Estado.Add(oEstado2);
             _context.Estado.Add(oEstado3);
-            _context.Estado.Add(oEstado4);
         }
     }
 }

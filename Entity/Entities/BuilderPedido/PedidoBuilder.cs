@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.Entities
+namespace Entity.Entities.BuilderPedido
 {
     public class PedidoBuilder
     {

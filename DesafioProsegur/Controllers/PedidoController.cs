@@ -3,6 +3,8 @@ using DesafioProsegur.Models;
 using Entity.Common;
 using Entity.Common.Enums;
 using Entity.Entities;
+using Entity.Entities.BuilderOrdenTrabajo;
+using Entity.Entities.BuilderPedido;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -22,6 +24,27 @@ namespace DesafioProsegur.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAll()
+        {
+            var pedidos = _unitOfwork.PedidoRepository.GetAll();
+            List<object> result = new List<object>();
+
+            foreach (var pedido in pedidos)
+            {
+                result.Add(new
+                {
+                    id = pedido.PedidoId,
+                    fechaInicio = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
+                    fechaFin = pedido.FechaFin,
+                    precio = pedido.Precio,
+                    estado = pedido.Estado.Nombre,
+                });
+            }
+
+            return Json(JsonReturn.SuccessConRetorno(result));
         }
 
         [HttpPost]
@@ -112,27 +135,20 @@ namespace DesafioProsegur.Controllers
                 if (orden.Item == null) continue;
                 if (orden.Item.MateriasPrimaXItem == null) continue;
 
-                actualizarStockMateriaPrima(orden.Item.MateriasPrimaXItem, materiasPrima);
+                foreach (var mpxi in orden.Item.MateriasPrimaXItem)
+                {
+                    var mp = materiasPrima.Where(x => x.MateriaPrimaId == mpxi.MateriaPrima.MateriaPrimaId).FirstOrDefault();
+
+                    if (mp != null) mp.Stock = mp.Stock - 1;
+                    else
+                    {
+                        mpxi.MateriaPrima.Stock += -1;
+                        materiasPrima.Add(mpxi.MateriaPrima);
+                    }
+                }
             }
 
             _unitOfwork.MateriaPrimaRepository.Guardar(materiasPrima);
-        }
-
-        private void actualizarStockMateriaPrima(
-            ICollection<MateriaPrimaXItem> materiasPrimaXItem,
-            ICollection<MateriaPrima> materiasPrima)
-        {
-            foreach (var mpxi in materiasPrimaXItem)
-            {
-                var mp = materiasPrima.Where(x => x.MateriaPrimaId == mpxi.MateriaPrima.MateriaPrimaId).FirstOrDefault();
-
-                if (mp != null) mp.Stock = mp.Stock - 1;
-                else
-                {
-                    mpxi.MateriaPrima.Stock += -1;
-                    materiasPrima.Add(mpxi.MateriaPrima);
-                }
-            }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace Entity.Entities
+﻿using Entity.Common.Enums;
+using Entity.Entities.StrategyEstado;
+
+namespace Entity.Entities
 {
     public class Pedido
     {
@@ -7,6 +10,8 @@
         private DateTime? fechaFin;
         private double precio;
         private ICollection<OrdenTrabajo> ordenes;
+
+        private IStateStrategy stateStrategy;
 
         public int PedidoId
         {
@@ -30,10 +35,25 @@
             get { return precio; }
             set { precio = value; }
         }
+        public Estado Estado
+        {
+            get { return obtenerEstado(); }
+        }
         public virtual ICollection<OrdenTrabajo> Ordenes
         {
             get { return ordenes; }
             set { ordenes = value; }
+        }
+
+        private Estado obtenerEstado()
+        {
+            if (this.ordenes.All(x => x.Estado.EstadoId == (int)EstadoEnum.PENDIENTE))
+                return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.PENDIENTE).First();
+            
+            if (this.ordenes.All(x => x.Estado.EstadoId == (int)EstadoEnum.FINALIZADO))
+                return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.FINALIZADO).First();
+
+            return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.EJECUCION).First();
         }
     }
 }

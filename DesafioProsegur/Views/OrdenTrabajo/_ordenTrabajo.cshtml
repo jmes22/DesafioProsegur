@@ -1,0 +1,128 @@
+﻿<div class="accordion mt-2" id="accordionOrdenTrabajo">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOrdenTrabajo" aria-expanded="true" aria-controls="collapseOrdenTrabajo">
+                <h2>Ordenes de trabajo</h2>
+            </button>
+        </h2>
+        <div id="collapseOrdenTrabajo" class="accordion-collapse collapse show" data-bs-parent="#accordionOrdenTrabajo">
+            <div class="accordion-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table id="tabla_orden_trabajo" class="table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>IdPedido</th>
+                                    <th>Fecha Pedido</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Estado</th>
+                                    <th>Tiempo Estimado Realización</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 mt-2" style="text-align: right;">
+    <a href="/Home" class="btn btn-primary">Volver</a>
+</div>
+<script type="text/javascript">
+    const ordenesTrabajo = [];
+    var tablaOrdenTrabajo = null;
+
+    $(document).ready(function () {
+        const columnas = obtenerColumnasTablaPedidos();
+
+        tablaOrdenTrabajo = CrearTabla('tabla_orden_trabajo', columnas, ordenesTrabajo);
+
+        function obtenerColumnasTablaPedidos() {
+            return [
+                {
+                    'data': 'id',
+                    'searcheable': false,
+                    'visible': false,
+                    'ordereable': false,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'idPedido',
+                    'searcheable': false,
+                    'visible': false,
+                    'ordereable': false,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'fechaPedido',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                }, 
+                {
+                    'data': 'fechaInicio',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'fechaFin',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'estado',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'data': 'tiempoEstimadoFin',
+                    'searcheable': false,
+                    'visible': true,
+                    'ordereable': true,
+                    'defaultContent': ''
+                },
+                {
+                    'searcheable': false,
+                    'ordereable': false,
+                    data: function (row, type, set) {
+                        var s = '';
+                        s += `<button id="ejecutar_${row.id}" class='btn btn-success' onclick='ejecutar(${row.id})'">Ejectuar</>`;
+                        return s;
+                    }
+                }
+            ]
+        }
+    });
+
+    function ejecutar(id) {
+        Ajax('POST', '/OrdenTrabajo/Ejecutar', { idOrdenTrabajo: id }, false, true, "Buscando...", ejecutarResponse);
+    }
+
+    function ejecutarResponse(obj) {
+        MsjAlertaExito('Aviso', 'Acción ejecutada correctamente.');
+    }
+
+    function getOrdenTrabajo(idPedido) {
+        Ajax('GET', '/OrdenTrabajo/GetOrdenesTrabajoByIdPedido', { idPedido: idPedido }, false, true, "Buscando...", getOrdenesTrabajoResponse);
+    }
+
+    function getOrdenesTrabajoResponse(obj) {
+        ordenesTrabajo.push(...obj.innerObject);
+        tablaOrdenTrabajo.clear();
+        tablaOrdenTrabajo.rows.add(ordenesTrabajo);
+        tablaOrdenTrabajo.draw();
+    }
+</script>

@@ -89,15 +89,6 @@ public partial class EFContext : DbContext
 
             entity.ToTable("MateriaPrimaXItem");
 
-            //entity.HasOne(d => d.Item).WithMany(p => p.MateriasPrimaXItem)
-            //  .HasForeignKey(d => d.IdItem);
-
-            //entity.HasOne(d => d.MateriaPrima).WithMany(p => p.MateriaPrimaXItem)
-            //   .HasForeignKey(d => d.IdMateriaPrima);
-
-            //entity.HasOne(d => d.Provincia).WithMany(p => p.MateriasPrimaXItem)
-            // .HasForeignKey(d => d.IdProvincia);
-
         });
 
         modelBuilder.Entity<OrdenTrabajo>(entity =>
@@ -105,22 +96,6 @@ public partial class EFContext : DbContext
             entity.HasKey(e => e.OrdenTrabajoId);
 
             entity.ToTable("OrdenTrabajo");
-
-            // entity.HasOne(e => e.Estado)
-            //.WithMany()
-            //.HasForeignKey(e => e.IdEstado);
-
-            // entity.HasOne(e => e.Item)
-            //.WithMany()
-            //.HasForeignKey(e => e.IdItem);
-
-            //entity.HasOne(e => e.Pedido)
-            //  .WithMany()
-            //  .HasForeignKey(b => b..IdPedido);
-
-            //entity.Ignore(e => e.Pedido);
-            //entity.Ignore(e => e.Estado);
-            //entity.Ignore(e => e.Item);
         });
 
         modelBuilder.Entity<Pedido>(entity =>
@@ -129,7 +104,8 @@ public partial class EFContext : DbContext
 
             entity.ToTable("Pedido");
 
-            entity.Ignore(e => e.Ordenes);
+            entity.Ignore(e => e.Estado);
+            //entity.Ignore(e => e.Ordenes);
         });
 
         modelBuilder.Entity<Provincia>(entity =>
