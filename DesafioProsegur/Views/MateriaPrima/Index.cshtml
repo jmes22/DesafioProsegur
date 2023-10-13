@@ -43,7 +43,7 @@
         function obtenerColumnasMateriaPrima() {
             return [
                 {
-                    'data': 'id',
+                    'data': 'materiaPrimaId',
                     'searcheable': false,
                     'visible': false,
                     'ordereable': false,
@@ -62,32 +62,44 @@
                     data: function (row, type, set) {
                         var s = '';
                         const stock = row.stock == null ? 0 : row.stock;
-                        s += `<input id="stock_${row.id}" class='form-control' type='number' value="${stock}"></>`;
+                        s += `<input id="stock_${row.materiaPrimaId}" class='form-control' type='number' value="${stock}"></>`;
                         return s;
                     }
                 }
             ]
         }
 
-        $('#tabla_materia_prima').on('keyup', 'input[id^="stock_"]', function () {
-            // Obtener el ID único del campo de entrada
-            const campoId = $(this).attr('id');
-
-            // Obtener el valor modificado en el campo de entrada
-            const nuevoValor = $(this).val();
-
-            // Obtener la fila de DataTables
-            const fila = tablaMateriaPrima.row($(this).closest('tr'));
-
-            // Obtener los datos de la fila actual
-            const datosFila = fila.data();
-
-            // Actualizar la propiedad "cantidad" en los datos de la fila
-            if (nuevoValor === "") datosFila.stock = 0;
-            else datosFila.stock = parseInt(nuevoValor);
+        $('#tabla_materia_prima').on('change', 'input[id^="stock_"]', function () {
+            actualizarValorStock(this);
         });
 
+        $('#tabla_materia_prima').on('keyup', 'input[id^="stock_"]', function () {
+            actualizarValorStock(this);
+        });
     });
+
+    function actualizarValorStock(elemento) {
+        // Obtener el ID único del campo de entrada
+        const campoId = $(elemento).attr('id');
+
+        // Obtener el valor modificado en el campo de entrada
+        const nuevoValor = $(elemento).val();
+
+        // Obtener la fila de DataTables
+        const fila = tablaMateriaPrima.row($(elemento).closest('tr'));
+
+        // Obtener los datos de la fila actual
+        const datosFila = fila.data();
+
+        // Actualizar la propiedad "cantidad" en los datos de la fila
+        if (nuevoValor === "" || parseInt(nuevoValor) <= 0) {
+            datosFila.stock = 0;
+            $(elemento).val(datosFila.stock);
+        }
+        else {
+            datosFila.stock = parseInt(nuevoValor);
+        }
+    }
 
     function getMateriaPrima() {
         Ajax('GET', '/MateriaPrima/GetAll', null, false, true, "Buscando materia prima", getMateriaPrimaResponse);

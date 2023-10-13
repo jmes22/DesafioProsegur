@@ -36,9 +36,9 @@ namespace DesafioProsegur.Models
             if (oViewModel?.Items.Count == 0) msjError += "Tiene que seleccionar al menos un producto.</br>";
             else
             {
-                var itemsCantidadCero = oViewModel?.Items.Where(x => x.Cantidad == 0).ToList();
+                var itemsCantidadCero = oViewModel?.Items.Where(x => x.Cantidad <= 0).ToList();
 
-                if (itemsCantidadCero.Count > 0)
+                if (itemsCantidadCero?.Count > 0)
                 {
                     foreach (var item in itemsCantidadCero)
                     {

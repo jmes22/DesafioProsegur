@@ -37,13 +37,16 @@ namespace DesafioProsegur.Controllers
 
             foreach (var pedido in pedidos)
             {
+                var estado = pedido.Estado;
+                if (estado == null) estado = _unitOfwork.EstadoRepository.GetById((int)EstadoEnum.EJECUCION);
+
                 result.Add(new
                 {
                     id = pedido.PedidoId,
                     fechaInicio = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss"),
                     fechaFin = pedido.FechaFin,
                     precio = pedido.Precio,
-                    estado = pedido.Estado.Nombre,
+                    estado = estado?.Nombre,
                 });
             }
 

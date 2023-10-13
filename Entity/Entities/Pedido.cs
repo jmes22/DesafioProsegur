@@ -51,7 +51,8 @@ namespace Entity.Entities
             if (this.ordenes.All(x => x.Estado.EstadoId == (int)EstadoEnum.FINALIZADO))
                 return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.FINALIZADO).First();
 
-            return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.EJECUCION).First();
+            return null;
+            //return ordenes.Select(x => x.Estado).Where(x => x.EstadoId == (int)EstadoEnum.EJECUCION).First();
         }
     }
 }

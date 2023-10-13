@@ -45,8 +45,27 @@
     const itemsPedido = [];
 
     $(document).ready(function () {
+        $('.card').on('change', 'input[id^="cantidad_"]', function () {
+            actualizarValorCantidad(this);
+        });
 
+        $('.card').on('keyup', 'input[id^="cantidad_"]', function () {
+            actualizarValorCantidad(this);
+        });
     });
+
+    function actualizarValorCantidad(elemento) {
+        // Obtener el ID único del campo de entrada
+        const campoId = $(elemento).attr('id');
+
+        // Obtener el valor modificado en el campo de entrada
+        const nuevoValor = $(elemento).val();
+
+        // Actualizar la propiedad "cantidad" en los datos de la fila
+        if (nuevoValor === "" || parseInt(nuevoValor) <= 0) {
+            $(elemento).val(1);
+        }
+    }
 
     function agregarAlPedido(itemId) {
         actualizarItemsPedido(itemId);

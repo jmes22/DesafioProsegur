@@ -49,18 +49,21 @@ namespace DesafioProsegur.Controllers
         private void crearModelo(FacturaViewModel viewModel, Pedido pedido) {
             viewModel.IdPedido = pedido.PedidoId;
 
-            var ordenesTrabajo = pedido.Ordenes.GroupBy(x => x.Item);
-            foreach (var orden in ordenesTrabajo)
+            var ordenesTrabajo = pedido?.Ordenes?.GroupBy(x => x.Item);
+            if (ordenesTrabajo != null)
             {
-                var ordenTrabjo = orden.First();
+                foreach (var orden in ordenesTrabajo)
+                {
+                    var ordenTrabjo = orden.First();
 
-                var id = ordenTrabjo.Item.ItemId;
-                var nombre = ordenTrabjo.Item.Nombre;
-                var precio = ordenTrabjo.Precio;
-                var cantidad = orden.Count();
-                var total = orden.Sum(x => x.Precio);
+                    var id = ordenTrabjo.Item.ItemId;
+                    var nombre = ordenTrabjo.Item.Nombre;
+                    var precio = ordenTrabjo.Precio;
+                    var cantidad = orden.Count();
+                    var total = orden.Sum(x => x.Precio);
 
-                viewModel.ItemsViewModel.Add(new ItemsViewModel(id, nombre, precio, cantidad, total));
+                    viewModel.ItemsViewModel.Add(new ItemsViewModel(id, nombre, precio, cantidad, total));
+                }
             }
 
             viewModel.FechaPedido = pedido.FechaInicio.ToString("dd/MM/yyyy:HH:mm:ss");
@@ -71,7 +74,8 @@ namespace DesafioProsegur.Controllers
         public JsonResult GetAll()
         {
             var facturas = _unitOfwork.FacturaRepository.GetAll();
-            var pedidos = _unitOfwork.PedidoRepository.GetAll().Where(p => p.Estado.EstadoId == (int)EstadoEnum.FINALIZADO).ToList();
+            var pedidos = _unitOfwork.PedidoRepository.GetAll();
+
             ICollection<FacturaViewModel> viewModel = new List<FacturaViewModel>();
 
             foreach (var factura in facturas)

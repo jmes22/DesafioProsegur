@@ -35,11 +35,14 @@
                             var jsonMenuItems = Context.Session.GetString("MenuItems");
                             var menuItems = jsonMenuItems == null ? new List<Accion>() : JsonConvert.DeserializeObject<List<Accion>>(jsonMenuItems);
 
-                            foreach (var item in menuItems)
+                            if (menuItems != null)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="@item.Controller" asp-action="@item.AccionController">@item.Nombre</a>
-                                </li>
+                                foreach (var item in menuItems)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="@item.Controller" asp-action="@item.AccionController">@item.Nombre</a>
+                                    </li>
+                                }
                             }
                         }
                     </ul>
@@ -62,7 +65,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - DesafioProsegur - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 Juan Pablo Salguero Ortiz - DesafioProsegur
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

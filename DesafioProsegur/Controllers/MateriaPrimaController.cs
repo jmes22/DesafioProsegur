@@ -24,9 +24,6 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
-            if (!SessionManager.TienePermiso(HttpContext, _unitOfwork, this.ControllerContext.ActionDescriptor.ControllerName))
-                return RedirectToAction("Index", "Home");
-
             return View();
         }
 
@@ -40,6 +37,9 @@ namespace DesafioProsegur.Controllers
         [HttpPost]
         public JsonResult Guardar(MateriaPrimaViewModel oViewModel)
         {
+            if(oViewModel == null || oViewModel.MateriasPrima == null)
+                return Json(JsonReturn.ErrorConMsjSimple());
+
             oViewModel.ValidarModelo(oViewModel, out string msjError);
             if (!string.IsNullOrEmpty(msjError))
                 return Json(JsonReturn.ErrorConMsjSimple(msjError));

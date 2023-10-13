@@ -39,9 +39,9 @@ namespace DesafioProsegur.Controllers
 
             foreach (var pedido in pedidos)
             {
-                var ordenes = pedido.Ordenes
-                                    .Where(x => x.Estado.EstadoId == (int)EstadoEnum.PENDIENTE ||
-                                           x.Estado.EstadoId == (int)EstadoEnum.EJECUCION);
+                if (pedido.Ordenes == null) continue;
+
+                var ordenes = pedido.Ordenes.Where(x => x.Estado.EstadoId == (int)EstadoEnum.PENDIENTE || x.Estado.EstadoId == (int)EstadoEnum.EJECUCION);
 
                 foreach (var orden in ordenes)
                 {
@@ -68,6 +68,9 @@ namespace DesafioProsegur.Controllers
             List<object> result = new List<object>();
 
             if (pedido == null)
+                return Json(JsonReturn.SuccessConRetorno(result));
+
+            if (pedido.Ordenes == null)
                 return Json(JsonReturn.SuccessConRetorno(result));
 
             foreach (var orden in pedido.Ordenes)

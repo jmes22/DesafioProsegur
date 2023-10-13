@@ -103,7 +103,7 @@ namespace DAL
                 _context.SaveChanges();
                 _transaction.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 RollbackTransaction();
             }
@@ -119,9 +119,9 @@ namespace DAL
             {
                  _transaction.Rollback();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw new Exception();
             }
         }
 
