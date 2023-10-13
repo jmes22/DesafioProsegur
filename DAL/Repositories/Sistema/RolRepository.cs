@@ -8,7 +8,7 @@ namespace DAL.Repositories.Sistema;
 
 public interface IRolRepository
 {
-    void Iniciar();
+    Rol? GetByRol(string rolActual);
 }
 public class RolRepository : IRolRepository
 {
@@ -19,26 +19,12 @@ public class RolRepository : IRolRepository
         _context = efContext;
     }
 
-    public void Iniciar()
+    public Rol? GetByRol(string rolActual)
     {
-        if (_context.Rol.Count() == 0)
-        {
-            Rol oRol1 = new Rol();
-            oRol1.Nombre = "Usuario";
-
-            Rol oRol2 = new Rol();
-            oRol2.Nombre = "Empelado";
-
-            Rol oRol3 = new Rol();
-            oRol3.Nombre = "Supervisor";
-
-            Rol oRol4 = new Rol();
-            oRol4.Nombre = "Administrador";
-
-            _context.Rol.Add(oRol1);
-            _context.Rol.Add(oRol2);
-            _context.Rol.Add(oRol3);
-            _context.Rol.Add(oRol4);
-        }
+        return _context.Rol
+            .Include(x => x.AccionXRol)
+                .ThenInclude(a => a.Accion)
+            .Where(x => x.Nombre.ToUpper().Equals(rolActual.ToUpper()))
+            .FirstOrDefault();
     }
 }

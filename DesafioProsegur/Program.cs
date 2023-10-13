@@ -38,6 +38,15 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<EFContext>(); // Reemplaza EFContext con el nombre de tu DbContext.
+
+    var dataInitializer = new DataInitializer();
+    dataInitializer.InsertarDataInicial(context);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -20,6 +20,9 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
+            if (!SessionManager.TienePermiso(HttpContext, _unitOfwork, this.ControllerContext.ActionDescriptor.ControllerName))
+                return RedirectToAction("Index", "Home");
+
             var items = _unitOfwork.ItemRepository.GetAll();
             PedidoViewModel viewModel = new PedidoViewModel(items);
 

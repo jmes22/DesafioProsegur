@@ -23,6 +23,9 @@ namespace DesafioProsegur.Controllers
 
         public IActionResult Index()
         {
+            if (!SessionManager.TienePermiso(HttpContext, _unitOfwork, this.ControllerContext.ActionDescriptor.ControllerName))
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Entity.Entities.Sistema;
+@using Newtonsoft.Json;
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -14,7 +16,7 @@
     <script src="@Url.Content("~/js/ajax.js")" asp-append-version="true"></script>
     <script src="@Url.Content("~/js/grilla.js")" asp-append-version="true"></script>
     <script src="@Url.Content("~/js/mensajes.js")" asp-append-version="true"></script>
-    <script src="@Url.Content("~/lib/Datatables/datatables.min.js")"  asp-append-version="true"></script>
+    <script src="@Url.Content("~/lib/Datatables/datatables.min.js")" asp-append-version="true"></script>
     <script src="@Url.Content("~/lib/bloqUI/bloqUI.js")" asp-append-version="true"></script>
 
 </head>
@@ -29,33 +31,28 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="Index">Hace tu pedido</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MateriaPrima" asp-action="Index">Materia prima</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pedido" asp-action="Index">Pedidos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="OrdenTrabajo" asp-action="Index">Ordenes de trabajo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Factura" asp-action="Index">Facturación</a>
-                        </li>
+                        @{
+                            var jsonMenuItems = Context.Session.GetString("MenuItems");
+                            var menuItems = jsonMenuItems == null ? new List<Accion>() : JsonConvert.DeserializeObject<List<Accion>>(jsonMenuItems);
 
+                            foreach (var item in menuItems)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="@item.Controller" asp-action="@item.AccionController">@item.Nombre</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             <div class="toast-container position-fixed top-0 end-0 p-3">
                 <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                     <div id="toast_site" class="toast-body">
-                        <!-- Contenido de tu toast aquí -->
                     </div>
                 </div>
             </div>

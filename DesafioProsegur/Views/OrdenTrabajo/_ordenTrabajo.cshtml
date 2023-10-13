@@ -18,7 +18,7 @@
                                     <th>Fecha Inicio</th>
                                     <th>Fecha Fin</th>
                                     <th>Estado</th>
-                                    <th>Tiempo Estimado Realización</th>
+                                    <th>Tiempo Est.</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -100,8 +100,8 @@
                     data: function (row, type, set) {
                         var s = '';
 
-                        //if (row.estado != `${@Entity.Common.Enums.EstadoEnum.FINALIZADO.ToString()})`
-                        s += `<button id="ejecutar_${row.id}" class='btn btn-success' onclick='ejecutar(${row.id})'">Ejectuar</>`;
+                        if (row.estado != '@Entity.Common.Enums.EstadoEnum.FINALIZADO.ToString()')
+                            s += `<button id="ejecutar_${row.id}" class='btn btn-success' onclick='ejecutar(${row.id})'">Ejectuar</>`;
 
                         return s;
                     }

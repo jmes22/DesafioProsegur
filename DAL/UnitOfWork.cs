@@ -52,7 +52,6 @@ namespace DAL
                 throw new ArgumentNullException(nameof(dbContextOptions));
 
             _context = new EFContext(dbContextOptions);
-            _context.Database.EnsureCreated();
             _transaction = _context.Database.BeginTransaction();
 
             _detalleFacturaRepository = new DetalleFacturaRepository(_context);

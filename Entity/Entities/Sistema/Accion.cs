@@ -10,6 +10,8 @@ namespace Entity.Entities.Sistema
     {
         private int id;
         private string nombre;
+        private string controller;
+        private string accionController;
 
         public int AccionId
         {
@@ -21,6 +23,18 @@ namespace Entity.Entities.Sistema
         {
             get { return nombre; }
             set { nombre = value; }
+        }
+
+        public string Controller
+        {
+            get { return controller; }
+            set { controller = value; }
+        }
+
+        public string AccionController
+        {
+            get { return accionController; }
+            set { accionController = value; }
         }
     }
 }
