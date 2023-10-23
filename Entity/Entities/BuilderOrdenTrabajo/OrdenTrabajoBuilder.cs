@@ -24,6 +24,9 @@ namespace Entity.Entities.BuilderOrdenTrabajo
 
         public OrdenTrabajoBuilder WithPrecio(double precio)
         {
+            if (precio < 0)
+                throw new ArgumentException("El precio no puede ser un valor negativo.", nameof(precio));
+
             ordenTrabajo.Precio = precio;
             return this;
         }
@@ -42,18 +45,33 @@ namespace Entity.Entities.BuilderOrdenTrabajo
 
         public OrdenTrabajoBuilder WithItem(Item item)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item), "El elemento no puede ser nulo.");
+
             ordenTrabajo.Item = item;
             return this;
         }
 
         public OrdenTrabajoBuilder WithPedido(Pedido pedido)
         {
+            if (pedido == null)
+                throw new ArgumentNullException(nameof(pedido), "El elemento no puede ser nulo.");
+
             ordenTrabajo.Pedido = pedido;
             return this;
         }
 
         public OrdenTrabajo Build()
         {
+            if (ordenTrabajo.Pedido == null)
+                throw new ArgumentNullException(nameof(ordenTrabajo.Pedido), "El elemento no puede ser nulo.");
+
+            if (ordenTrabajo.Item == null)
+                throw new ArgumentNullException(nameof(ordenTrabajo.Item), "El elemento no puede ser nulo.");
+
+            if (ordenTrabajo.Precio < 0)
+                throw new ArgumentException("El precio no puede ser un valor negativo.", nameof(ordenTrabajo.Precio));
+
             return ordenTrabajo;
         }
     }

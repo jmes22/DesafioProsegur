@@ -70,5 +70,21 @@ namespace TestProject
                     .Build();
             });
         }
+
+        [Test]
+        public void OrdenTrabajoBuilder_NullItem_ThrowsException()
+        {
+            Item item = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var ordenTrabajo = new OrdenTrabajoBuilder()
+                    .WithPrecio(100.0)
+                    .WithPedido(new Pedido())
+                    .WithEstado(new Estado())
+                    .WithItem(item)
+                    .Build();
+            });
+        }
     }
 }
