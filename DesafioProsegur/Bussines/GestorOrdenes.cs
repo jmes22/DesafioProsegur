@@ -60,7 +60,7 @@ namespace DesafioProsegur.Bussines
             Item item)
         {
             var ordenTrabajo = new OrdenTrabajoBuilder()
-                    .WithPrecio(pedido.Precio)
+                    .WithPrecio(item.Precio)
                     .WithPedido(pedido)
                     .WithEstado(estado)
                     .WithItem(item)

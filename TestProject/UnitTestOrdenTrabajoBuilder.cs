@@ -41,5 +41,34 @@ namespace TestProject
             Assert.That(ordenTrabajo.Estado, Is.EqualTo(estado));
             Assert.That(ordenTrabajo.Item, Is.EqualTo(item));
         }
+
+        [Test]
+        public void OrdenTrabajoBuilder_PrecioInvalido_ThrowsException()
+        {
+            double precio = -1.0;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var ordenTrabajo = new OrdenTrabajoBuilder()
+                    .WithPrecio(precio)
+                    .Build();
+            });
+        }
+
+        [Test]
+        public void OrdenTrabajoBuilder_NullPedido_ThrowsException()
+        {
+            Pedido pedido = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var ordenTrabajo = new OrdenTrabajoBuilder()
+                    .WithPrecio(100.0)
+                    .WithPedido(pedido)
+                    .WithEstado(new Estado())
+                    .WithItem(new Item())
+                    .Build();
+            });
+        }
     }
 }
