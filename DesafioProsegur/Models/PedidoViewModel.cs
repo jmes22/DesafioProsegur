@@ -22,32 +22,5 @@ namespace DesafioProsegur.Models
                 );
             }
         }
-
-        public void ValidarModelo(PedidoViewModel oViewModel, out string msjError)
-        { 
-            msjError = string.Empty;
-
-            if (oViewModel?.Items == null)
-            {
-                msjError += "Tiene que seleccionar al menos un producto.</br>";
-                return;
-            }
-
-            if (oViewModel?.Items.Count == 0) msjError += "Tiene que seleccionar al menos un producto.</br>";
-            else
-            {
-                var itemsCantidadCero = oViewModel?.Items.Where(x => x.Cantidad <= 0).ToList();
-
-                if (itemsCantidadCero?.Count > 0)
-                {
-                    foreach (var item in itemsCantidadCero)
-                    {
-                        msjError += "El item: " + item.Nombre + " tiene que tener una cantidad mayor que 0.</br>";
-                    }
-                }
-            }
-
-           
-        }
     }
 }

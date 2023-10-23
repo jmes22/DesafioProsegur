@@ -89,6 +89,8 @@ namespace DesafioProsegur.Controllers
 
             foreach (var pedido in pedidosNoEnModelo)
             {
+                if (pedido.Estado.EstadoId != (int)EstadoEnum.FINALIZADO) continue;
+
                 viewModel.Add(new FacturaViewModel(pedido));
             }
 
